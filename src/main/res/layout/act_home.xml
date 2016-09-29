@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/act_home_vp"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"></android.support.v4.view.ViewPager>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="#f0f1f5"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/colorHome_bg"
+        android:padding="5dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/act_home_btn_home"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:drawableTop="@drawable/selector_home"
+            android:gravity="center"
+            android:text="主页"
+            android:textColor="@drawable/selector_text_color"
+            android:background="@color/colorTransparency"/>
+
+        <Button
+            android:id="@+id/act_home_btn_msg"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:drawableTop="@drawable/selector_msg"
+            android:gravity="center"
+            android:text="信息"
+            android:textColor="@drawable/selector_text_color"
+            android:background="@color/colorTransparency"/>
+
+        <Button
+            android:id="@+id/act_home_btn_add"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:drawableTop="@drawable/selector_add"
+            android:gravity="center"
+            android:background="@color/colorTransparency"/>
+
+        <Button
+            android:id="@+id/act_home_btn_person"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:drawableTop="@drawable/selector_person"
+            android:text="个人中心"
+            android:textColor="@drawable/selector_text_color"
+            android:background="@color/colorTransparency"/>
+
+        <Button
+            android:id="@+id/act_home_btn_more"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:drawableTop="@drawable/selector_more"
+            android:gravity="center"
+            android:text="更多"
+            android:textColor="@drawable/selector_text_color"
+            android:background="@color/colorTransparency"/>
+    </LinearLayout>
+</LinearLayout>

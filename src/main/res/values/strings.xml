@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">乐玩旅行</string>
+    <string name="login_name">请输入手机号</string>
+    <string name="login_pwd">请输入密码</string>
+    <string name="login_forget_pwd">忘记密码</string>
+    <string name="login_login">登录</string>
+    <string name="register">注册</string>
+    <string name="register_phone">请输入手机号</string>
+    <string name="register_code">请输入验证码</string>
+    <string name="register_get_code">获取验证码</string>
+    <string name="register_pwd">请输入密码</string>
+    <string name="register_pwd2">重复输入密码</string>
+    <string name="register_nickname">请输入昵称</string>
+    <string name="register_text">注册代表你已同意</string>
+    <string name="register_text2">乐玩旅行用户协议</string>
+    <string name="register_back_ogin">返回登陆</string>
+    <string name="main_home">主页</string>
+    <string name="main_msg">消息</string>
+    <string name="main_add">添加</string>
+    <string name="main_person">个人中心</string>
+    <string name="main_more">更多</string>
+    <!--pop 字段-->
+    <string name="ddc_dialog_cancel">取消</string>
+
+</resources>

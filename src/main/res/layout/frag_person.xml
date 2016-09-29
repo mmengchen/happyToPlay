@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPersonBg"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/colorGreenFont"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/frag_person_ib_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/colorTransparency"
+            android:src="@drawable/back" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="个人中心"
+            android:textColor="@color/colorFont"
+            android:textSize="20dp" />
+
+        <ImageButton
+            android:id="@+id/frag_person_ib_menu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/colorTransparency"
+            android:gravity="center"
+            android:src="@drawable/menu" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:background="@color/colorWhite"
+        android:gravity="center"
+        android:orientation="vertical">
+        <!--<ImageView-->
+        <!--android:id="@+id/frag_person_iv_head"-->
+        <!--android:layout_marginTop="20dp"-->
+        <!--android:layout_width="80dp"-->
+        <!--android:layout_height="80dp"-->
+        <!--android:src="@drawable/ic_test"-->
+        <!--android:layout_weight="1" />-->
+        <com.xiaoguang.happytoplay.view.CircleImageView
+            android:id="@+id/frag_person_circle_iv_head"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginTop="20dp"
+            android:layout_weight="1"
+            android:src="@drawable/ic_test" />
+        />
+
+        <TextView
+            android:id="@+id/frag_person_tv_nickname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:text="我的筱广哥"
+            android:textColor="@color/colorDust2"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/frag_person_tv_phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="账号 ：18600434760" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/frag_person_tv_sex"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="女" />
+
+            <TextView
+                android:id="@+id/frag_person_tv_age"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:text="24岁" />
+
+            <TextView
+                android:id="@+id/frag_person_tv_location"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="30dp"
+                android:layout_marginLeft="45dp"
+                android:text="北京昌平区" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <GridView
+        android:id="@+id/frag_person_gv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:numColumns="2"></GridView>
+
+    <View
+        android:id="@+id/frag_person_v"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"></View>
+</LinearLayout>

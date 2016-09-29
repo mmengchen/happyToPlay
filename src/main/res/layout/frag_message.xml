@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <!--导航栏-->
+    <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:background="@color/colorGreenFont"
+    android:orientation="horizontal">
+        <ImageButton
+            android:id="@+id/frag_message_ib_back"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/back"
+            android:background="@color/colorTransparency"/>
+        <TextView
+            android:id="@+id/frag_message_tv_friend"
+            android:layout_marginLeft="80dp"
+            android:clickable="true"
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            android:textColor="@color/colorFont"
+            android:gravity="center"
+            android:text="好友"/>
+        <TextView
+            android:id="@+id/frag_message_tv_act"
+            android:layout_width="80dp"
+            android:clickable="true"
+            android:layout_height="match_parent"
+            android:textColor="@color/colorFont"
+            android:gravity="center"
+            android:layout_marginRight="50dp"
+            android:text="活动"/>
+    <ImageButton
+        android:gravity="center"
+        android:id="@+id/frag_person_ib_menu"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/menu"
+        android:background="@color/colorTransparency"/>
+</LinearLayout>
+    <!--内容区域 为Fragment-->
+    <FrameLayout
+        android:id="@+id/frag_message_fl"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorPrimaryDark">
+    </FrameLayout>
+</LinearLayout>
