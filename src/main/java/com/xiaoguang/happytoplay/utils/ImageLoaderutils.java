@@ -34,6 +34,26 @@ public class ImageLoaderutils {
         return loader;
     }
 
+    /**
+     * 返回显示图片opt
+     *
+     * @param loading
+     * @param logding_error
+     * @return
+     */
+    public static DisplayImageOptions myGetOpt(int loading, int logding_error) {
+        optbuilder = new DisplayImageOptions.Builder();
+        //uri加载默认图片
+//        optbuilder.showImageOnLoading()
+        optbuilder.showImageForEmptyUri(loading);
+        //uri加载失败的图片
+        optbuilder.showImageOnFail(logding_error);
+        optbuilder.cacheInMemory(true);//做内存缓存
+        optbuilder.cacheOnDisc(true);//做硬盘缓存
+        opt = optbuilder.build();
+        return opt;
+    }
+
 //    //返回显示图片使得opt
 //    public static DisplayImageOptions getOpt() {
 //        optbuilder = new DisplayImageOptions.Builder();

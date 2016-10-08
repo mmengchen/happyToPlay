@@ -64,6 +64,11 @@ public class FragPersonPresenterImpl implements IFragPersonContract.IFragPersonP
 
     }
 
+    /**
+     * 从图库中选择（存在相关问题）
+     * @param context  上下文
+     * @param data 从系统图库返回的Intent
+     */
     @Override
     public void setIcoHeader(Context context, Intent data) {
         Uri selectedImage = data.getData();
@@ -74,25 +79,43 @@ public class FragPersonPresenterImpl implements IFragPersonContract.IFragPersonP
         int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
         String picturePath = cursor.getString(columnIndex);
         Bitmap bimap = BitmapFactory.decodeFile(picturePath);
+       /*
         //从本地获取用户信息
-//        User user = BmobUser.getCurrentUser(User.class);
-//        //为用户设置头像资源
-//        user.setUserHead(new BmobFile(new File(URI.create(picturePath))));//存在问题，无法解析资源路径
+        User user = BmobUser.getCurrentUser(User.class);
+        //为用户设置头像资源
+        user.setUserHead(new BmobFile(new File(URI.create(picturePath))));//存在问题，无法解析资源路径
         //将头像资源上传到服务器
-//        upload(user);
+        upload(user);
+        */
+        //2016.10.5更新操作
+        //将图片资源上传到服务器
+        User user = new User();
+        user.setUserHead(new BmobFile(new File(picturePath)));
+        upload(user,picturePath);
         //加载进度条
         view.showLoading();
     }
 
     @Override
     public void setIconHeader() {
-        Bitmap bitmap = BitmapFactory.decodeFile(Environment.getExternalStorageDirectory() + "/icoImage.jpg");
-        //为图片按钮设置照片
-        User user = BmobUser.getCurrentUser(User.class);
-        user.setUserHead(new BmobFile(new File(Environment.getExternalStorageDirectory() + "/icoImage.jpg")));
+        //显示一个对话框
         view.showLoading();
-        upload(user,bitmap);
-        view.setIcoHeader(bitmap);
+//        Bitmap bitmap = BitmapFactory.decodeFile(Environment.getExternalStorageDirectory() + "/icoImage.jpg");
+        //声明并实例化BmobFile对象
+        BmobFile bmobFile = new BmobFile(new File(Environment.getExternalStorageDirectory() + "/icoImage.jpg"));
+        User newUser = new User();
+        newUser.setUserHead(bmobFile);
+        //上传图片（方法中默认封装了当前本地的用户Id）
+//        String uri = Uri.fromFile(new BmobFile(new File(Environment.getExternalStorageDirectory() + "/icoImage.jpg")))
+       //获取当前图片uri
+        String uri = bmobFile.getFileUrl();
+        //上传图片
+        upload(newUser,uri);
+//        view.setIcoHeader(bitmap);
+        //2016.10.5进行修改，统一使用ImageLoader
+        //加载图片
+
+//        view.displayImage();}
     }
 
     /**
@@ -100,19 +123,21 @@ public class FragPersonPresenterImpl implements IFragPersonContract.IFragPersonP
      *
      * @param user
      */
-    private void upload(final User user, final Bitmap bitmap) {
+    private void upload(final User user, final String uri) {
         LogUtils.i("我正在执行文件上传");
         //调用model层的上传文件的方法  方法
         icoModel.upload(user, new IcoModel.UploadCallBack() {
             @Override
-            public void success() {
+            public void success(final String uri) {
                 LogUtils.i("头像上传成功");
                 view.showMsg("头像上传成功");
-                icoModel.update(user, new IcoModel.UpdateCallBack() {
+                icoModel.update(BmobUser.getCurrentUser(User.class).getObjectId(),user, new IcoModel.UpdateCallBack() {
                     @Override
                     public void success() {
                         LogUtils.i("更新信息成功");
                         view.showMsg("更新信息成功");
+                        //进行图片的显示
+                        view.displayImage(uri);
                         //隐藏加载框
                         view.hiddenLoading();
                     }
@@ -122,7 +147,8 @@ public class FragPersonPresenterImpl implements IFragPersonContract.IFragPersonP
                         LogUtils.i("更新信息失败"+e.toString());
                         view.showMsg("更新信息失败"+e.toString());
                         view.hiddenLoading();
-                        view.setIcoHeader(bitmap);
+//                        view.setIcoHeader(bitmap);
+                        view.displayImage(uri);
                     }
                 });
             }
@@ -142,9 +168,21 @@ public class FragPersonPresenterImpl implements IFragPersonContract.IFragPersonP
     @Override
     public void loadHeader() {
         //弹出加载框
-        view.showLoading();
+        view.showLoading("加载头像中....");
+        LogUtils.i("myUtils-------开始加载头像");
         //获取当前在线的用户信息
         User currentUser = BmobUser.getCurrentUser(User.class);
+        //判断当前头像是否为空
+        if(currentUser.getUserHead()!=null){
+            //获取当前头像的uri
+            String uri = currentUser.getUserHead().getFileUrl();
+            //展示图片
+            LogUtils.i("我是在本地的文件的url为"+uri);
+            view.displayImage(uri);
+            //取消显示框
+            view.hiddenLoading();
+            return;
+        }
         BmobQuery<User> query = new BmobQuery<User>();
         //从服务器获取user 对象 根据Id
         query.getObject(currentUser.getObjectId(), new QueryListener<User>() {
@@ -163,7 +201,9 @@ public class FragPersonPresenterImpl implements IFragPersonContract.IFragPersonP
                     view.displayImage(uri);
 
                 }else{//查询失败
-                    view.showMsg("刷新数据失败！");
+                    view.showMsg("刷新数据失败！"+e.toString());
+                    LogUtils.i("刷新数据失败"+e.toString());
+                    view.hiddenLoading();
                 }
             }
         });

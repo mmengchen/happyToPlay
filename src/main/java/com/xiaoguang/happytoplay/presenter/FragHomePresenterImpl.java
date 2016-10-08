@@ -2,6 +2,7 @@ package com.xiaoguang.happytoplay.presenter;
 
 import com.xiaoguang.happytoplay.adapter.XListVewAdapter;
 import com.xiaoguang.happytoplay.application.MyApplitation;
+import com.xiaoguang.happytoplay.bean.Grather;
 import com.xiaoguang.happytoplay.contract.IFragHomeContract;
 import com.xiaoguang.happytoplay.view.XListView;
 
@@ -17,7 +18,7 @@ public class FragHomePresenterImpl implements IFragHomeContract.IFragHomePresent
     private final IFragHomeContract.IFragHomeView view;
     //声明一个listview 控件
     private XListView xlistview;
-    private List<String> strs;
+    private List<Grather> grathers;
 
     public FragHomePresenterImpl(IFragHomeContract.IFragHomeView view) {
         this.view = view;
@@ -29,7 +30,7 @@ public class FragHomePresenterImpl implements IFragHomeContract.IFragHomePresent
         //为listview 添加数据源
         xlistview = (XListView)o[0];
         start();
-        xlistview.setAdapter(new XListVewAdapter(MyApplitation.context,strs));
+        xlistview.setAdapter(new XListVewAdapter(MyApplitation.context,grathers));
     }
     @Override
     public void search(String searchText) {
@@ -41,9 +42,9 @@ public class FragHomePresenterImpl implements IFragHomeContract.IFragHomePresent
      */
     @Override
     public void start() {
-        strs = new ArrayList<String>();
+        grathers = new ArrayList<Grather>();
         for (int i = 0; i<2;i++){
-            strs.add("模拟数据"+i);
+            grathers.add(new Grather());
         }
         //暂时进行模拟数据
 

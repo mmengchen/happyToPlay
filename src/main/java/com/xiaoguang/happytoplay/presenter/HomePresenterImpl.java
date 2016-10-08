@@ -40,7 +40,24 @@ public class HomePresenterImpl implements IHomeContract.IHomePresenter {
         viewPager.setAdapter(new HomeFragPagerAdapter(fm,fragments));
 
         //为vp添加点击事件
-        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+//        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+//            @Override
+//            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+//
+//            }
+//            //当vp滑动后改变其颜色
+//            @Override
+//            public void onPageSelected(int position) {
+//                view.changBtnSelectedStatus(position);
+//            }
+//
+//            @Override
+//            public void onPageScrollStateChanged(int state) {
+//
+//            }
+//        });
+        //2016.10.06修改，
+        viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 

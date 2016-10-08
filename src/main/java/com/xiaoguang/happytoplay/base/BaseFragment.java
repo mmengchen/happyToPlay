@@ -74,6 +74,4 @@ public abstract class BaseFragment extends Fragment {
             dialog.dismiss();
         }
     }
-
-    public abstract void showLoading(String msg);
 }

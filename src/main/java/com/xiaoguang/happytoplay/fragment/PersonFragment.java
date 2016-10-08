@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -16,20 +15,18 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.xiaoguang.happytoplay.R;
 import com.xiaoguang.happytoplay.application.MyApplitation;
 import com.xiaoguang.happytoplay.base.BaseFragment;
 import com.xiaoguang.happytoplay.contract.IFragPersonContract;
 import com.xiaoguang.happytoplay.presenter.FragPersonPresenterImpl;
+import com.xiaoguang.happytoplay.utils.ImageChooseUtils;
 import com.xiaoguang.happytoplay.utils.ImageLoaderutils;
 import com.xiaoguang.happytoplay.utils.LogUtils;
-import com.xiaoguang.happytoplay.utils.ToastUtils;
 import com.xiaoguang.happytoplay.view.BottomPopView;
 import com.xiaoguang.happytoplay.view.CircleImageView;
-
-import java.io.File;
-import java.io.IOException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -77,7 +74,8 @@ public class PersonFragment extends BaseFragment implements IFragPersonContract.
 
     //从图库获取
     public static final int GET_PHOTO = 3;
-    private Uri imageUri;
+    //获取图片的Uri
+    private Uri imageUri = ImageChooseUtils.getImageUri();
 
     @Override
     public void onAttach(Activity activity) {
@@ -100,6 +98,7 @@ public class PersonFragment extends BaseFragment implements IFragPersonContract.
         ButterKnife.bind(this, view);
         //加载数据（不是很合理，会造成卡顿现象）
         setData();
+        //加载gridview 的项
         presenter.loadingData(mFragPersonGv);
         return view;
     }
@@ -116,12 +115,12 @@ public class PersonFragment extends BaseFragment implements IFragPersonContract.
 
     @Override
     public void showLoading() {
-
+        super.showProcessDialog(null, "加载头像", false);
     }
 
     @Override
     public void showLoading(String msg) {
-        super.showProcessDialog(null, msg+"...", true);
+        super.showProcessDialog(null, msg + "...", true);
     }
 
     @Override
@@ -179,7 +178,14 @@ public class PersonFragment extends BaseFragment implements IFragPersonContract.
             @Override
             public void onTopButtonClick() {
                 //拍照
-                takePhoto();
+//                takePhoto();
+//                ImageChooseUtils.takePhoto();
+//                ImageChooseUtils.choosePhoto();
+                /*
+                 2016.10.5修改，使用工具类获取Intent
+                 */
+                Intent intent = ImageChooseUtils.takePhoto();
+                startActivityForResult(intent, TAKE_PHOTO);
                 LogUtils.i("我在点击拍照");
                 //点击之后隐藏
                 bottomPopView.dismiss();
@@ -191,7 +197,8 @@ public class PersonFragment extends BaseFragment implements IFragPersonContract.
                 LogUtils.i("我在点击照片");
                 //点击之后隐藏
                 bottomPopView.dismiss();
-                choosePhoto();
+                Intent intent = ImageChooseUtils.choosePhoto();
+                startActivityForResult(intent, GET_PHOTO);
             }
         };
         bottomPopView.setTopText("拍照");
@@ -201,64 +208,71 @@ public class PersonFragment extends BaseFragment implements IFragPersonContract.
     }
 
     /**
-     * 拍照
+     * 2016.10.5进行修改,使用工具类进行相关操作
+     *
+     * @param requestCode
+     * @param resultCode
+     * @param data
      */
-    private void takePhoto() {
-        //初始化图片的Uri
-        imageUri = getImageUri();
-        if (isHasSdcard()) {//判断SD卡的状态
-            Intent takePhotoIntent = new Intent(
-                    "android.media.action.IMAGE_CAPTURE");
-            takePhotoIntent.putExtra(
-                    MediaStore.EXTRA_OUTPUT,
-                    imageUri);
-            startActivityForResult(takePhotoIntent,
-                    TAKE_PHOTO);
-        } else {
-            ToastUtils.toastShort("未检测到sd卡");
-        }
-    }
-
-    /**
-     * 从系统图库中选择照片
-     */
-    private void choosePhoto() {
-        Intent intent = new Intent(
-                Intent.ACTION_PICK,
-                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        startActivityForResult(intent, GET_PHOTO);
-    }
-
-    /**
-     * 获取图片的路径
-     */
-    private Uri getImageUri() {
-        File outputImage = new File(Environment.getExternalStorageDirectory(),
-                "icoImage.jpg");
-        if (outputImage.exists()) {
-            outputImage.delete();
-        }
-        try {
-            outputImage.createNewFile();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return Uri.fromFile(outputImage);
-    }
-
-    ;
-
-    /**
-     * 判断sd卡是否存在
-     */
-    public static boolean isHasSdcard() {
-        String state = Environment.getExternalStorageState();
-        if (state.equals(Environment.MEDIA_MOUNTED)) {
-            return true;
-        } else {
-            return false;
-        }
-    }
+//    /**
+//     * 拍照
+//     */
+//    private void takePhoto() {
+//        //初始化图片的Uri
+//        imageUri = getImageUri();
+//        if (isHasSdcard()) {//判断SD卡的状态
+//            Intent takePhotoIntent = new Intent(
+//                    "android.media.action.IMAGE_CAPTURE");
+//            takePhotoIntent.putExtra(
+//                    MediaStore.EXTRA_OUTPUT,
+//                    imageUri);
+//            startActivityForResult(takePhotoIntent,
+//                    TAKE_PHOTO);
+//        } else {
+//            ToastUtils.toastShort("未检测到sd卡");
+//        }
+//    }
+//
+//    /**
+//     * 从系统图库中选择照片
+//     */
+//    private void choosePhoto() {
+//        Intent intent = new Intent(
+//                Intent.ACTION_PICK,
+//                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+//        startActivityForResult(intent, GET_PHOTO);
+//    }
+//
+//    /**
+//     * 获取图片的路径
+//     */
+//    private Uri getImageUri() {
+//        File outputImage = new File(Environment.getExternalStorageDirectory(),
+//                "icoImage.jpg");
+//        if (outputImage.exists()) {
+//            outputImage.delete();
+//        }
+//        try {
+//            outputImage.createNewFile();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        return Uri.fromFile(outputImage);
+//    }
+//
+//    ;
+//
+//    /**
+//     * 判断sd卡是否存在
+//     */
+//    public static boolean isHasSdcard() {
+//        String state = Environment.getExternalStorageState();
+//        if (state.equals(Environment.MEDIA_MOUNTED)) {
+//            return true;
+//        } else {
+//            return false;
+//        }
+//    }
 
     //获取图片  ,存在问题：1.拍照时无法进行图片的裁剪（不断加载）（解决）  2.从图库中找图片时，出现空指针异常(解决)
     @Override
@@ -310,7 +324,11 @@ public class PersonFragment extends BaseFragment implements IFragPersonContract.
 
     @Override
     public void displayImage(String uri) {
+        //设置图片加载器的参数
+        DisplayImageOptions options = ImageLoaderutils.myGetOpt(R.drawable.loading, R.drawable.logding_error);
+        //获取图片加载器对象
         ImageLoader loader = ImageLoaderutils.getInstance(MyApplitation.context);
-        loader.displayImage(uri, mFragPersonIvHead);
+        //展示图片
+        loader.displayImage(uri, mFragPersonIvHead, options);
     }
 }

@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
 import com.xiaoguang.happytoplay.R;
+import com.xiaoguang.happytoplay.bean.Grather;
 
 import java.util.List;
 
@@ -15,22 +16,22 @@ import java.util.List;
  */
 public class XListVewAdapter extends BaseAdapter {
     private Context context;
-    private List<String> strs;
+    private List<Grather> grathers;
     private LayoutInflater inflater ;
-    public XListVewAdapter(Context context, List<String> strs) {
+    public XListVewAdapter(Context context, List<Grather> grathers) {
         this.context = context;
-        this.strs = strs;
+        this.grathers = grathers;
         inflater = LayoutInflater.from(context);
     }
 
     @Override
     public int getCount() {
-        return strs.size();
+        return grathers.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return strs.get(position);
+        return grathers.get(position);
     }
 
     @Override

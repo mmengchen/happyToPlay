@@ -1,12 +1,13 @@
 package com.xiaoguang.happytoplay.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.Button;
 
-import com.xiaoguang.happytoplay.R;
+import com.xiaoguang.happytoplay.*;
 import com.xiaoguang.happytoplay.base.BaseActivity;
 import com.xiaoguang.happytoplay.contract.IHomeContract;
 import com.xiaoguang.happytoplay.presenter.HomePresenterImpl;
@@ -31,6 +32,7 @@ public class HomeActivity extends BaseActivity implements IHomeContract.IHomeVie
     Button mBtnMsg;
     @BindView(R.id.act_home_btn_add)
     Button mBtnAdd;
+    //自定义按钮
     @BindView(R.id.act_home_btn_person)
     Button mBtnPerson;
     @BindView(R.id.act_home_btn_more)
@@ -115,7 +117,8 @@ public class HomeActivity extends BaseActivity implements IHomeContract.IHomeVie
                 mVp.setCurrentItem(1);
                 break;
             case R.id.act_home_btn_add:
-//                changBtnSelectedStatus();
+                LogUtils.i("我正在打开发布信息的activity");
+                startActivity(new Intent(this,PublishActivity.class));
                 break;
             case R.id.act_home_btn_person:
                 changBtnSelectedStatus(2);

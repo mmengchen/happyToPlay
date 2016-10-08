@@ -1,8 +1,5 @@
 package com.xiaoguang.happytoplay.model;
 
-import android.content.Context;
-import android.content.SharedPreferences;
-
 import com.xiaoguang.happytoplay.application.MyApplitation;
 import com.xiaoguang.happytoplay.bean.User;
 
@@ -45,15 +42,20 @@ public class LoginModelImpl implements IBaseModel {
         //保存到缓存中
         MyApplitation.user = user;
 
-        //获取SharedPreferences 对象
-        SharedPreferences prefrences = MyApplitation.context.getSharedPreferences("userInfo", Context.MODE_PRIVATE);
-        //获取编辑器对象
-        SharedPreferences.Editor editor = prefrences.edit();
-        editor.putBoolean("logined",true);
-        editor.putString("objectId",user.getObjectId());
-        editor.putString("userName",user.getUsername());
-        editor.putString("nickName",user.getNickName());
-        editor.commit();
+//        //获取SharedPreferences 对象
+//        SharedPreferences prefrences = MyApplitation.context.getSharedPreferences("userInfo", Context.MODE_PRIVATE);
+//        //获取编辑器对象
+//        SharedPreferences.Editor editor = prefrences.edit();
+//        editor.putBoolean("logined",true);
+//        editor.putString("objectId",user.getObjectId());
+//        editor.putString("userName",user.getUsername());
+//        editor.putString("nickName",user.getNickName());
+//        editor.commit();
+        /*
+            2016.10.5修改，由于BmobUser 提供将登陆后的信息自动保存的方法，本人将不再使用此方法，减少代码行数
+         */
+        //获取当前登陆的对象
+//        User currentUser = BmobUser.getCurrentUser(User.class);
     }
     /**
      *    登陆回调接口及回调方法

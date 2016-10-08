@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/colorPersonBg"
     android:orientation="vertical">
 
@@ -48,13 +49,6 @@
         android:background="@color/colorWhite"
         android:gravity="center"
         android:orientation="vertical">
-        <!--<ImageView-->
-        <!--android:id="@+id/frag_person_iv_head"-->
-        <!--android:layout_marginTop="20dp"-->
-        <!--android:layout_width="80dp"-->
-        <!--android:layout_height="80dp"-->
-        <!--android:src="@drawable/ic_test"-->
-        <!--android:layout_weight="1" />-->
         <com.xiaoguang.happytoplay.view.CircleImageView
             android:id="@+id/frag_person_circle_iv_head"
             android:layout_width="80dp"

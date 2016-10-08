@@ -24,6 +24,8 @@ public interface IFragPersonContract {
          */
         void showLoading();
 
+        void showLoading(String msg);
+
         /**
          * 隐藏提示框
          */

@@ -13,7 +13,7 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.xiaoguang.happytoplay.R;
-import com.xiaoguang.happytoplay.utils.ScreenUtil;
+import com.xiaoguang.happytoplay.utils.ScreenUtils;
 
 /**
  * 自定义底部弹出式对话框，
@@ -76,7 +76,7 @@ public abstract class BottomPopView {
             }
         });
 
-        mPopupWindow = new PopupWindow(view, ScreenUtil.getScreenWidth(mContext), LinearLayout.LayoutParams.WRAP_CONTENT);
+        mPopupWindow = new PopupWindow(view, ScreenUtils.getScreenWidth(mContext), LinearLayout.LayoutParams.WRAP_CONTENT);
         //监听PopupWindow的dismiss，当dismiss时屏幕恢复亮度
         mPopupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
             @Override

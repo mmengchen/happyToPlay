@@ -59,6 +59,7 @@
         android:textColor="@color/colorFont"
         android:background="@drawable/selector_btn"
         android:text="@string/login_login" />
+     <!--<circular-progress-button></circular-progress-button>-->
 
     <Button
         android:layout_marginTop="10dp"
