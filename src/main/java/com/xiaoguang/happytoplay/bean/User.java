@@ -18,6 +18,13 @@ public class User extends BmobUser {
      * 用户头像
      */
     private BmobFile userHead;
+
+    /**
+     * 性别
+     */
+    private String sex;
+
+
     public String getNickName() {
         return nickName;
     }
@@ -32,5 +39,22 @@ public class User extends BmobUser {
 
     public void setUserHead(BmobFile userHead) {
         this.userHead = userHead;
+    }
+
+    public String getSex() {
+        return sex;
+    }
+
+    public void setSex(String sex) {
+        this.sex = sex;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "nickName='" + nickName + '\'' +
+                ", userHead=" + userHead +
+                ", sex='" + sex + '\'' +
+                '}';
     }
 }

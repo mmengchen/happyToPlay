@@ -2,7 +2,6 @@ package com.xiaoguang.happytoplay.fragment;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -311,17 +310,6 @@ public class PersonFragment extends BaseFragment implements IFragPersonContract.
         intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
         startActivityForResult(intent, CROP_PHOTO);
     }
-
-    /**
-     * 设置头像
-     *
-     * @param bitmap
-     */
-    @Override
-    public void setIcoHeader(Bitmap bitmap) {
-        mFragPersonIvHead.setImageBitmap(bitmap);
-    }
-
     @Override
     public void displayImage(String uri) {
         //设置图片加载器的参数

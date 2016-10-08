@@ -135,9 +135,9 @@ public class PublishActivity extends BaseActivity implements IPubContract.IPubVi
         //实例化Grather对象
         Grather grather = new Grather();
         //设置数据（暂未进行非空认证）
-        grather.setGraherName(mEtActName.getText().toString());//设置活动标题
-        grather.setGraherType(mSp.getSelectedItem().toString());//设置活动类型
-        grather.setGraherContent(mEtContent.getText().toString());//设置活动内容
+        grather.setGratherName(mEtActName.getText().toString());//设置活动标题
+        grather.setGratherType(mSp.getSelectedItem().toString());//设置活动类型
+        grather.setGratherContent(mEtContent.getText().toString());//设置活动内容
         grather.setGraterDataTime(mTvTime.getText().toString());//设置活动时间
         PoiInfo poiInfo =(PoiInfo)MyApplitation.getDatas("location",false);
         grather.setGratherGeoPoint(new BmobGeoPoint(poiInfo.location.longitude,poiInfo.location.latitude));//设置活动经纬度

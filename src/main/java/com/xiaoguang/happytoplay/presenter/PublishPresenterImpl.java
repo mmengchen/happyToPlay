@@ -132,7 +132,7 @@ public class PublishPresenterImpl implements IPubContract.IPubPresenter {
        DatePickerDialog datePickerDialog = new DatePickerDialog(context, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                dateStr = year+"年"+year+"月"+dayOfMonth+"日";
+                dateStr = year+"年"+(month+1)+"月"+dayOfMonth+"日";
                 LogUtils.i("我选择的日期为："+dateStr);
                 timePickerDialog.show();
             }

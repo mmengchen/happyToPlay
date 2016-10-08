@@ -6,12 +6,20 @@ import android.os.AsyncTask;
 import android.view.View;
 
 import com.xiaoguang.happytoplay.application.MyApplitation;
+import com.xiaoguang.happytoplay.bean.Grather;
 import com.xiaoguang.happytoplay.bean.User;
 import com.xiaoguang.happytoplay.contract.IWelContract;
+import com.xiaoguang.happytoplay.model.GratherModelImpl;
+import com.xiaoguang.happytoplay.model.UserModelImpl;
 import com.xiaoguang.happytoplay.utils.LogUtils;
 import com.xiaoguang.happytoplay.utils.NetWorkStateUtils;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import cn.bmob.v3.BmobUser;
+import cn.bmob.v3.exception.BmobException;
 
 /**
  * Created by 11655 on 2016/9/27.
@@ -25,6 +33,8 @@ public class WelPresenterImpl implements IWelContract.IWelPresenter {
     private IWelContract.IWelView view;
     //当前的网络状态,(默认为false)
     private boolean currentNetworkState = false;
+    //用于存放发布活动人的map集合，给个活动对应一个user对象
+    private Map<String,User> userMap = new HashMap<>();
 
     public WelPresenterImpl(IWelContract.IWelView view) {
         this.view = view;
@@ -73,10 +83,8 @@ public class WelPresenterImpl implements IWelContract.IWelPresenter {
         if (netState) {
             //网络连接正常
             view.showMsg("网络连接正常");
-            //调用view的跳转的方法跳转到登陆界面
-            //判断是否是第一次登陆
-            isLoginEd();
-//            view.jumpActivity();
+            //从服务器获取活动数据
+            getGrathersFromServer();
             LogUtils.i("myTag", "网络情况正常" + netState);
 
         } else {
@@ -84,6 +92,55 @@ public class WelPresenterImpl implements IWelContract.IWelPresenter {
             view.showDialog();
             LogUtils.i("myTag", "网络情况不正正常" + netState);
         }
+    }
+
+    /**
+     * 从服务器上获取活动内容的信息
+     * 2016.10.8 更改
+     */
+    private void getGrathersFromServer() {
+        //实例化GratherModel对象
+        GratherModelImpl gratherModelImpl = new GratherModelImpl();
+        //调用model 层方法查询数据
+        gratherModelImpl.queryGrather(100, null, 0, 10, new GratherModelImpl.QueryCallBack<Grather>() {
+            @Override
+            public void done(final List<Grather> result, BmobException e) {
+                if (e == null) {
+                    LogUtils.i("从服务器获取数据成功");
+                    //将服务器返回的活动信息保存到内存中
+                    MyApplitation.putDatas("grathers", result);
+                    /*
+                      循环根据用户的objectId 获取每个活动的发布人的信息
+                     */
+                    for (int i = 0; i < result.size(); i++) {
+                        //获取活动的ID
+                        final String objectID = result.get(i).getObjectId();
+                        new UserModelImpl().queryUsers(result.get(i).getGratherOriginator(), new UserModelImpl.QueryUserCallBack() {
+                            @Override
+                            public void onDone(User user, BmobException e) {
+                                if (e == null) {
+                                    LogUtils.i("查询发布人成功");
+                                    view.showMsg("从服务器获取数据成功");
+                                    //将信息保存到map集合中,以活动Id为key，user对象为value存放数据
+                                    userMap.put(objectID,user);
+                                    //暂时获取数据成功后，才进行其他判断，以后需要更改解决方案，如果无法获取数据将无法进行系统的bug
+                                    //判断是否是第一次登陆
+                                    isLoginEd();
+                                } else {
+                                    LogUtils.i("查询发布人失败" + e.toString());
+                                    view.showMsg("从服务器获取数据失败");
+                                }
+                            }
+                        });
+                    }
+                    //将信息保存到MyApplication中,方便以后使用
+                    MyApplitation.putDatas("users",userMap);
+                } else {
+                    view.showMsg("从服务器获取数据失败");
+                    LogUtils.i("从服务器获取数据失败,原因为" + e.toString());
+                }
+            }
+        });
     }
 
     /**

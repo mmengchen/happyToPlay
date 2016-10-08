@@ -13,11 +13,11 @@ import cn.bmob.v3.datatype.BmobGeoPoint;
 
 public class Grather extends BmobObject {
     //活动名称
-    private String graherName;
+    private String gratherName;
     //活动类型
     private String gratherType;
     //活动内容
-    private String graherContent;
+    private String gratherContent;
     //活动图片
     private List<BmobFile> gratherImageFiles;
     //活动时间
@@ -36,28 +36,28 @@ public class Grather extends BmobObject {
     public Grather() {
     }
 
-    public String getGraherName() {
-        return graherName;
+    public String getGratherName() {
+        return gratherName;
     }
 
-    public void setGraherName(String graherName) {
-        this.graherName = graherName;
+    public void setGratherName(String gratherName) {
+        this.gratherName = gratherName;
     }
 
-    public String getGraherType() {
+    public String getGratherType() {
         return gratherType;
     }
 
-    public void setGraherType(String getGraherType) {
+    public void setGratherType(String gratherType) {
         this.gratherType = gratherType;
     }
 
-    public String getGraherContent() {
-        return graherContent;
+    public String getGratherContent() {
+        return gratherContent;
     }
 
-    public void setGraherContent(String graherContent) {
-        this.graherContent = graherContent;
+    public void setGratherContent(String gratherContent) {
+        this.gratherContent = gratherContent;
     }
 
     public List<BmobFile> getGratherImageFiles() {

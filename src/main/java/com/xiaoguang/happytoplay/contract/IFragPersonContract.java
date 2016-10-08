@@ -2,7 +2,6 @@ package com.xiaoguang.happytoplay.contract;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 
 import com.xiaoguang.happytoplay.activity.IBaseView;
 import com.xiaoguang.happytoplay.presenter.IBasePresenter;
@@ -54,9 +53,6 @@ public interface IFragPersonContract {
          * 获取控件中的数据
          */
         void getData();
-
-        void setIcoHeader(Bitmap bitmap);
-
         /**
          * 展示头像
          * @param uri

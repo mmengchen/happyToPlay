@@ -42,11 +42,15 @@ public class FragHomePresenterImpl implements IFragHomeContract.IFragHomePresent
      */
     @Override
     public void start() {
-        grathers = new ArrayList<Grather>();
-        for (int i = 0; i<2;i++){
-            grathers.add(new Grather());
+        //初始化XlistView数据,从内存中获取数据
+        if (MyApplitation.getDatas("grathers",false)!=null){
+            grathers = (List<Grather>) MyApplitation.getDatas("grathers",false);
+        }else {
+            //数据为空时,会出现问题
+            grathers = new ArrayList<>();
+            Grather grather = new Grather();
+            grathers.add(grather);
         }
-        //暂时进行模拟数据
 
     }
 }
