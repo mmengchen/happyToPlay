@@ -1,5 +1,6 @@
 package com.xiaoguang.happytoplay.bean;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import cn.bmob.v3.BmobObject;
@@ -32,6 +33,8 @@ public class Grather extends BmobObject {
     private boolean flag;
     //活动的地址
     private String address;
+    //收藏活动的人
+    private List<String> loveUserIds;
 
     public Grather() {
     }
@@ -61,6 +64,9 @@ public class Grather extends BmobObject {
     }
 
     public List<BmobFile> getGratherImageFiles() {
+        if (gratherImageFiles == null) {
+            gratherImageFiles = new ArrayList<>();
+        }
         return gratherImageFiles;
     }
 
@@ -114,5 +120,33 @@ public class Grather extends BmobObject {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public List<String> getLoveUserIds() {
+        if (loveUserIds == null) {
+            loveUserIds = new ArrayList<>();
+        }
+        return loveUserIds;
+    }
+
+    public void setLoveUserIds(List<String> loveUserIds) {
+        this.loveUserIds = loveUserIds;
+    }
+
+    @Override
+    public String toString() {
+        return "Grather{" +
+                "gratherName='" + gratherName + '\'' +
+                ", gratherType='" + gratherType + '\'' +
+                ", gratherContent='" + gratherContent + '\'' +
+                ", gratherImageFiles=" + gratherImageFiles +
+                ", graterDataTime='" + graterDataTime + '\'' +
+                ", gratherGeoPoint=" + gratherGeoPoint +
+                ", gratherMoney=" + gratherMoney +
+                ", gratherOriginator='" + gratherOriginator + '\'' +
+                ", flag=" + flag +
+                ", address='" + address + '\'' +
+                ", loveUserIds=" + loveUserIds +
+                '}';
     }
 }

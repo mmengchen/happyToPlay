@@ -2,7 +2,6 @@ package com.xiaoguang.happytoplay.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,8 +10,10 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.xiaoguang.happytoplay.R;
+import com.xiaoguang.happytoplay.base.BaseFragment;
 import com.xiaoguang.happytoplay.contract.IFragHomeContract;
 import com.xiaoguang.happytoplay.presenter.FragHomePresenterImpl;
+import com.xiaoguang.happytoplay.utils.ToastUtils;
 import com.xiaoguang.happytoplay.view.XListView;
 
 import butterknife.BindView;
@@ -23,7 +24,7 @@ import butterknife.OnClick;
  * Created by 11655 on 2016/9/28.
  */
 
-public class HomeFragment extends Fragment implements IFragHomeContract.IFragHomeView {
+public class HomeFragment extends BaseFragment implements IFragHomeContract.IFragHomeView {
 
     //获取控件
     @BindView(R.id.frag_home_ib_back)
@@ -69,17 +70,17 @@ public class HomeFragment extends Fragment implements IFragHomeContract.IFragHom
 
     @Override
     public void showMsg(String msg) {
-
+        ToastUtils.toastShort(msg);
     }
 
     @Override
     public void showLoading() {
-
+        super.showProcessDialog("","",true);
     }
 
     @Override
     public void hiddenLoading() {
-
+        super.dismissProcessDialog();
     }
 
     @Override

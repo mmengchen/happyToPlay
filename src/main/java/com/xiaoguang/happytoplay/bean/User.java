@@ -1,5 +1,8 @@
 package com.xiaoguang.happytoplay.bean;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.datatype.BmobFile;
 
@@ -24,6 +27,11 @@ public class User extends BmobUser {
      */
     private String sex;
 
+    /**
+     * 收藏的活动的Id
+     */
+    private List<String> loveGratherIds;
+
 
     public String getNickName() {
         return nickName;
@@ -34,6 +42,9 @@ public class User extends BmobUser {
     }
 
     public BmobFile getUserHead() {
+        if (userHead==null){
+            userHead = new BmobFile();
+        }
         return userHead;
     }
 
@@ -49,12 +60,24 @@ public class User extends BmobUser {
         this.sex = sex;
     }
 
+    public List<String> getLoveGratherIds() {
+        if (loveGratherIds == null) {
+            loveGratherIds = new ArrayList<>();
+        }
+        return loveGratherIds;
+    }
+
+    public void setLoveGratherIds(List<String> loveGratherIds) {
+        this.loveGratherIds = loveGratherIds;
+    }
+
     @Override
     public String toString() {
         return "User{" +
                 "nickName='" + nickName + '\'' +
                 ", userHead=" + userHead +
                 ", sex='" + sex + '\'' +
+                ", loveGratherIds=" + loveGratherIds +
                 '}';
     }
 }

@@ -10,13 +10,10 @@ import com.xiaoguang.happytoplay.bean.Grather;
 import com.xiaoguang.happytoplay.bean.User;
 import com.xiaoguang.happytoplay.contract.IWelContract;
 import com.xiaoguang.happytoplay.model.GratherModelImpl;
-import com.xiaoguang.happytoplay.model.UserModelImpl;
 import com.xiaoguang.happytoplay.utils.LogUtils;
 import com.xiaoguang.happytoplay.utils.NetWorkStateUtils;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
@@ -33,8 +30,8 @@ public class WelPresenterImpl implements IWelContract.IWelPresenter {
     private IWelContract.IWelView view;
     //当前的网络状态,(默认为false)
     private boolean currentNetworkState = false;
-    //用于存放发布活动人的map集合，给个活动对应一个user对象
-    private Map<String,User> userMap = new HashMap<>();
+    //声明一个活动id
+    private String currentGratherId;
 
     public WelPresenterImpl(IWelContract.IWelView view) {
         this.view = view;
@@ -84,7 +81,9 @@ public class WelPresenterImpl implements IWelContract.IWelPresenter {
             //网络连接正常
             view.showMsg("网络连接正常");
             //从服务器获取活动数据
-            getGrathersFromServer();
+//            getGrathersFromServer();
+            //判断是否是第一次登陆
+            isLoginEd();
             LogUtils.i("myTag", "网络情况正常" + netState);
 
         } else {
@@ -106,37 +105,18 @@ public class WelPresenterImpl implements IWelContract.IWelPresenter {
             @Override
             public void done(final List<Grather> result, BmobException e) {
                 if (e == null) {
-                    LogUtils.i("从服务器获取数据成功");
+                    LogUtils.i("从服务器获取活动数据成功");
                     //将服务器返回的活动信息保存到内存中
                     MyApplitation.putDatas("grathers", result);
+                    LogUtils.i("数据为：" + result.toString());
                     /*
                       循环根据用户的objectId 获取每个活动的发布人的信息
                      */
-                    for (int i = 0; i < result.size(); i++) {
-                        //获取活动的ID
-                        final String objectID = result.get(i).getObjectId();
-                        new UserModelImpl().queryUsers(result.get(i).getGratherOriginator(), new UserModelImpl.QueryUserCallBack() {
-                            @Override
-                            public void onDone(User user, BmobException e) {
-                                if (e == null) {
-                                    LogUtils.i("查询发布人成功");
-                                    view.showMsg("从服务器获取数据成功");
-                                    //将信息保存到map集合中,以活动Id为key，user对象为value存放数据
-                                    userMap.put(objectID,user);
-                                    //暂时获取数据成功后，才进行其他判断，以后需要更改解决方案，如果无法获取数据将无法进行系统的bug
-                                    //判断是否是第一次登陆
-                                    isLoginEd();
-                                } else {
-                                    LogUtils.i("查询发布人失败" + e.toString());
-                                    view.showMsg("从服务器获取数据失败");
-                                }
-                            }
-                        });
-                    }
-                    //将信息保存到MyApplication中,方便以后使用
-                    MyApplitation.putDatas("users",userMap);
+                    LogUtils.i("获取数据条数为" + result.size());
+                    view.showMsg("获取数据成功");
+                    LogUtils.i("查询发布人成功");
                 } else {
-                    view.showMsg("从服务器获取数据失败");
+                    view.showMsg("获取数据失败");
                     LogUtils.i("从服务器获取数据失败,原因为" + e.toString());
                 }
             }
@@ -147,20 +127,6 @@ public class WelPresenterImpl implements IWelContract.IWelPresenter {
      * 判断用户是否登陆过
      */
     private void isLoginEd() {
-//        SharedPreferences preferences = MyApplitation.context.getSharedPreferences("userInfo", Context.MODE_PRIVATE);
-//        if (preferences.getBoolean("logined",false)){//如果登陆过
-//            User user = new User();
-//            user.setObjectId(preferences.getString("objectId",""));
-//            user.setUsername(preferences.getString("userName",""));
-//            user.setNickName(preferences.getString("nickName",""));
-//            //将用户信息保存的缓存中
-//            MyApplitation.user = user;
-//            //直接跳转到主页面
-//            view.jumpHome();
-//        }else{
-//            //没有登陆过，跳转到登陆界面
-//            view.jumpActivity();
-//        }
         /*
             2016.10.5修改，将直接使用Bmob提供的方法判断用户是否登陆过
          */
@@ -201,10 +167,11 @@ public class WelPresenterImpl implements IWelContract.IWelPresenter {
         animator.addListener(new Animator.AnimatorListener() {
             @Override
             public void onAnimationStart(Animator animation) {
+                LogUtils.i("动画开始");
                 //获取当前的网络状态
                 currentNetworkState = NetWorkStateUtils.isNetworkAvailable(MyApplitation.context);
-                //
-                LogUtils.i("我执行了");
+                //从服务器获取数据
+                getGrathersFromServer();
             }
 
             @Override
