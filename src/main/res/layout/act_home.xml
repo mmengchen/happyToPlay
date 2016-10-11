@@ -51,7 +51,9 @@
             android:layout_weight="1"
             android:drawableTop="@drawable/selector_add"
             android:gravity="center"
-            android:background="@color/colorTransparency"/>
+            android:background="@color/colorTransparency"
+            android:textColor="@drawable/selector_text_color"
+            android:text="发布"/>
         <Button
             android:id="@+id/act_home_btn_person"
             android:layout_width="0dp"

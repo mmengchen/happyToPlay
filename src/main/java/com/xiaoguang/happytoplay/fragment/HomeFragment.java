@@ -39,7 +39,8 @@ public class HomeFragment extends BaseFragment implements IFragHomeContract.IFra
     XListView mXlv;
     private IFragHomeContract.IFragHomePresenter presenter;
     //声明一个标记，用于判断点击事件,默认为false 表示第一次点击
-    private boolean flag =false;
+    private boolean flag = false;
+    private long exitTime = 0;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -75,7 +76,7 @@ public class HomeFragment extends BaseFragment implements IFragHomeContract.IFra
 
     @Override
     public void showLoading() {
-        super.showProcessDialog("","",true);
+        super.showProcessDialog("", "", true);
     }
 
     @Override
@@ -112,16 +113,18 @@ public class HomeFragment extends BaseFragment implements IFragHomeContract.IFra
 
     /**
      * 为控件添加监听事件
+     *
      * @param view
      */
     @OnClick({R.id.frag_home_ib_back, R.id.frag_home_ib_search, R.id.frag_home_ib_menu})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.frag_home_ib_back:
+                isExitAPP();
                 break;
             case R.id.frag_home_ib_search:
-                if(flag){//如果使第二次点击,进行搜索相关
-                    Toast.makeText(getContext(),"我在进行搜索功能",Toast.LENGTH_SHORT).show();
+                if (flag) {//如果使第二次点击,进行搜索相关
+                    Toast.makeText(getContext(), "我在进行搜索功能", Toast.LENGTH_SHORT).show();
                     //隐藏输入框
                     mEtSearch.setVisibility(View.GONE);
                     //显示返回按钮
@@ -132,8 +135,7 @@ public class HomeFragment extends BaseFragment implements IFragHomeContract.IFra
                     //调用p层进行处理
                     presenter.search(searchText);
 
-                }
-                else{
+                } else {
                     //显示搜索控件
                     mEtSearch.setVisibility(View.VISIBLE);
                     //隐藏控件
@@ -143,6 +145,20 @@ public class HomeFragment extends BaseFragment implements IFragHomeContract.IFra
                 break;
             case R.id.frag_home_ib_menu:
                 break;
+        }
+    }
+
+    /**
+     * 双击退出,计算时间差实现
+     */
+    private void isExitAPP() {
+        if ((System.currentTimeMillis() - exitTime) > 2000) {
+            ToastUtils.toastShort("再按一次退出程序");
+            exitTime = System.currentTimeMillis();
+        } else {
+            //退出APP
+            getActivity().finish();
+            System.exit(0);
         }
     }
 }

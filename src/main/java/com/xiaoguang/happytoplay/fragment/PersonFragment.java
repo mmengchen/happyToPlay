@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.xiaoguang.happytoplay.R;
+import com.xiaoguang.happytoplay.activity.PersonDetailsActivity;
 import com.xiaoguang.happytoplay.application.MyApplitation;
 import com.xiaoguang.happytoplay.base.BaseFragment;
 import com.xiaoguang.happytoplay.contract.IFragPersonContract;
@@ -134,7 +135,7 @@ public class PersonFragment extends BaseFragment implements IFragPersonContract.
 
     @Override
     public void jumpActivity() {
-
+        startActivity(new Intent(getContext(), PersonDetailsActivity.class));
     }
 
     @Override
@@ -177,12 +178,6 @@ public class PersonFragment extends BaseFragment implements IFragPersonContract.
             @Override
             public void onTopButtonClick() {
                 //拍照
-//                takePhoto();
-//                ImageChooseUtils.takePhoto();
-//                ImageChooseUtils.choosePhoto();
-                /*
-                 2016.10.5修改，使用工具类获取Intent
-                 */
                 Intent intent = ImageChooseUtils.takePhoto();
                 startActivityForResult(intent, TAKE_PHOTO);
                 LogUtils.i("我在点击拍照");
@@ -205,74 +200,6 @@ public class PersonFragment extends BaseFragment implements IFragPersonContract.
         // 显示底部菜单
         bottomPopView.show();
     }
-
-    /**
-     * 2016.10.5进行修改,使用工具类进行相关操作
-     *
-     * @param requestCode
-     * @param resultCode
-     * @param data
-     */
-//    /**
-//     * 拍照
-//     */
-//    private void takePhoto() {
-//        //初始化图片的Uri
-//        imageUri = getImageUri();
-//        if (isHasSdcard()) {//判断SD卡的状态
-//            Intent takePhotoIntent = new Intent(
-//                    "android.media.action.IMAGE_CAPTURE");
-//            takePhotoIntent.putExtra(
-//                    MediaStore.EXTRA_OUTPUT,
-//                    imageUri);
-//            startActivityForResult(takePhotoIntent,
-//                    TAKE_PHOTO);
-//        } else {
-//            ToastUtils.toastShort("未检测到sd卡");
-//        }
-//    }
-//
-//    /**
-//     * 从系统图库中选择照片
-//     */
-//    private void choosePhoto() {
-//        Intent intent = new Intent(
-//                Intent.ACTION_PICK,
-//                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-//        startActivityForResult(intent, GET_PHOTO);
-//    }
-//
-//    /**
-//     * 获取图片的路径
-//     */
-//    private Uri getImageUri() {
-//        File outputImage = new File(Environment.getExternalStorageDirectory(),
-//                "icoImage.jpg");
-//        if (outputImage.exists()) {
-//            outputImage.delete();
-//        }
-//        try {
-//            outputImage.createNewFile();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        return Uri.fromFile(outputImage);
-//    }
-//
-//    ;
-//
-//    /**
-//     * 判断sd卡是否存在
-//     */
-//    public static boolean isHasSdcard() {
-//        String state = Environment.getExternalStorageState();
-//        if (state.equals(Environment.MEDIA_MOUNTED)) {
-//            return true;
-//        } else {
-//            return false;
-//        }
-//    }
-
     //获取图片  ,存在问题：1.拍照时无法进行图片的裁剪（不断加载）（解决）  2.从图库中找图片时，出现空指针异常(解决)
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {

@@ -41,7 +41,7 @@
             android:gravity="center"
             android:src="@drawable/menu" />
     </LinearLayout>
-
+    <!--导航栏结束-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -3,11 +3,11 @@ package com.xiaoguang.happytoplay.presenter;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.GridView;
 
 import com.xiaoguang.happytoplay.adapter.FragPersonGridViewAdapter;
@@ -46,6 +46,20 @@ public class FragPersonPresenterImpl implements IFragPersonContract.IFragPersonP
         icoModel = new IcoModel();
         //进行数据的初始化操作
         start();
+//        ArrayAdapter adapter = new ArrayAdapter<>();
+//        ListView listView = new ListView();
+//        listView.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//                parent.getItemAtPosition(position);
+//
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> parent) {
+//
+//            }
+//        });
     }
 
     @Override
@@ -57,6 +71,17 @@ public class FragPersonPresenterImpl implements IFragPersonContract.IFragPersonP
             LogUtils.i("我在加载数据 ,gv 为空");
         }
         gv.setAdapter(new FragPersonGridViewAdapter(datas));
+        //设置点击事件的监听
+        gv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                switch (position){
+                    case 5://跳转到个人信息设置
+                        FragPersonPresenterImpl.this.view.jumpActivity();
+                        break;
+                }
+            }
+        });
     }
 
     @Override
@@ -78,15 +103,6 @@ public class FragPersonPresenterImpl implements IFragPersonContract.IFragPersonP
         cursor.moveToFirst();
         int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
         String picturePath = cursor.getString(columnIndex);
-        Bitmap bimap = BitmapFactory.decodeFile(picturePath);
-       /*
-        //从本地获取用户信息
-        User user = BmobUser.getCurrentUser(User.class);
-        //为用户设置头像资源
-        user.setUserHead(new BmobFile(new File(URI.create(picturePath))));//存在问题，无法解析资源路径
-        //将头像资源上传到服务器
-        upload(user);
-        */
         //2016.10.5更新操作
         //将图片资源上传到服务器
         User user = new User();
@@ -100,22 +116,14 @@ public class FragPersonPresenterImpl implements IFragPersonContract.IFragPersonP
     public void setIconHeader() {
         //显示一个对话框
         view.showLoading();
-//        Bitmap bitmap = BitmapFactory.decodeFile(Environment.getExternalStorageDirectory() + "/icoImage.jpg");
         //声明并实例化BmobFile对象
         BmobFile bmobFile = new BmobFile(new File(Environment.getExternalStorageDirectory() + "/icoImage.jpg"));
         User newUser = new User();
         newUser.setUserHead(bmobFile);
-        //上传图片（方法中默认封装了当前本地的用户Id）
-//        String uri = Uri.fromFile(new BmobFile(new File(Environment.getExternalStorageDirectory() + "/icoImage.jpg")))
        //获取当前图片uri
         String uri = bmobFile.getFileUrl();
         //上传图片
         upload(newUser,uri);
-//        view.setIcoHeader(bitmap);
-        //2016.10.5进行修改，统一使用ImageLoader
-        //加载图片
-
-//        view.displayImage();}
     }
 
     /**
@@ -147,7 +155,6 @@ public class FragPersonPresenterImpl implements IFragPersonContract.IFragPersonP
                         LogUtils.i("更新信息失败"+e.toString());
                         view.showMsg("更新信息失败"+e.toString());
                         view.hiddenLoading();
-//                        view.setIcoHeader(bitmap);
                         view.displayImage(uri);
                     }
                 });
@@ -212,10 +219,12 @@ public class FragPersonPresenterImpl implements IFragPersonContract.IFragPersonP
     @Override
     public void start() {
         datas = new ArrayList<String>();
-        //模拟数据
-        for (int i = 0; i < 6; i++) {
-            datas.add("模拟的数据" + i);
-        }
+        datas.add("优 惠");
+        datas.add("收 藏");
+        datas.add("发 起");
+        datas.add("订 单");
+        datas.add("活 动");
+        datas.add("设 置");
     }
 
 }

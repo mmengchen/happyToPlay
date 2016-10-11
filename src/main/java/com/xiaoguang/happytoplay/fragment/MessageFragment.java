@@ -47,7 +47,6 @@ public class MessageFragment extends Fragment implements IFragMsgContract.IFragM
         View view = inflater.inflate(R.layout.frag_message, null);
         ButterKnife.bind(this, view);
         //获取当前默认的布局
-//        presenter.loadingData(getFragmentManager(),mFragMessageFl,1);
         return view;
     }
 

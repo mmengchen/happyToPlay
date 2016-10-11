@@ -59,12 +59,7 @@ public class MyApplitation extends Application{
         BmobSMS.initialize(context, "89138a540444011eb66341febb70e16a");
         //初始化BMobSDK
         Bmob.initialize(this, "89138a540444011eb66341febb70e16a");
-        /*
-            初始化自动更新initAppVersion方法适合开发者调试自动更新功能时使用，
-         一旦AppVersion表在后台创建成功，建议屏蔽或删除此方法，否则会生成多行记录。
-        */
-//        BmobUpdateAgent.initAppVersion();
-        // 使用推送服务时的初始化操作 10.9号修改
+        // 使用推送服务时的初始化操作
         BmobInstallation.getCurrentInstallation().save();
         // 启动推送服务
         BmobPush.startWork(this);

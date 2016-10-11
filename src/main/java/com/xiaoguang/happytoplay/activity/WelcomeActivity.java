@@ -1,15 +1,18 @@
 package com.xiaoguang.happytoplay.activity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.xiaoguang.happytoplay.R;
 import com.xiaoguang.happytoplay.base.BaseActivity;
 import com.xiaoguang.happytoplay.contract.IWelContract;
 import com.xiaoguang.happytoplay.presenter.WelPresenterImpl;
+import com.xiaoguang.happytoplay.utils.ToastUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -25,6 +28,10 @@ public class WelcomeActivity extends BaseActivity implements IWelContract.IWelVi
     @BindView(R.id.act_wel_iv)
     ImageView mImageView;
     private IWelContract.IWelPresenter presenter;
+    private AlertDialog alertDialog;
+    private static final String TITLE = "蜂窝移动数据已关闭";
+    private static final String TEXT = "打开蜂窝移动数据或使用无线局域网来访问数据";
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,7 +51,25 @@ public class WelcomeActivity extends BaseActivity implements IWelContract.IWelVi
 
     @Override
     public void showDialog() {
-        super.showAlertDialog();
+        //获取一个builder对象
+        AlertDialog.Builder builder = super.showAlertDialog(TITLE, TEXT, false);
+        //设置按钮
+        builder.setPositiveButton("设置", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //跳转到系统网络设置
+                Intent intent = new Intent(Settings.ACTION_WIRELESS_SETTINGS);
+                startActivity(intent);
+            }
+        }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //退出虚拟机
+                System.exit(0);
+            }
+        });
+        //显示对话框
+        alertDialog = builder.show();
     }
 
     /**
@@ -52,7 +77,7 @@ public class WelcomeActivity extends BaseActivity implements IWelContract.IWelVi
      */
     @Override
     public void jumpHome() {
-        startActivity(new Intent(this,HomeActivity.class));
+        startActivity(new Intent(this, HomeActivity.class));
         finish();
     }
 
@@ -63,23 +88,23 @@ public class WelcomeActivity extends BaseActivity implements IWelContract.IWelVi
 
     @Override
     public void jumpActivity() {
-        startActivity(new Intent(this,LoginActivity.class));
+        startActivity(new Intent(this, LoginActivity.class));
         finish();
     }
 
     @Override
     public void showLoading() {
-        super.showProcessDialog("努力加载网络中","努力加载网络中",false);
+        super.showProcessDialog("努力加载网络中", "努力加载网络中", false);
     }
 
     @Override
     public void hiddenLoading() {
-        dismissAlertDialog();
+        dismissAlertDialog(alertDialog);
         dismissProcessDialog();
     }
 
     @Override
     public void showMsg(String string) {
-        Toast.makeText(this,""+ string,Toast.LENGTH_SHORT).show();
+        ToastUtils.toastShort(string);
     }
 }

@@ -1,5 +1,7 @@
 package com.xiaoguang.happytoplay.activity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -74,6 +76,7 @@ public class PublishActivity extends BaseActivity implements IPubContract.IPubVi
     public static final int REQUEST_MAP_CODE = 5;
     //获取图片的Uri
     private Uri imageUri = ImageChooseUtils.getImageUri();;
+    private AlertDialog alertDialog;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -185,6 +188,7 @@ public class PublishActivity extends BaseActivity implements IPubContract.IPubVi
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.act_publish_ib_back:
+                isStopPublish();
                 break;
             case R.id.act_publish_ib_menu:
                 break;
@@ -201,7 +205,6 @@ public class PublishActivity extends BaseActivity implements IPubContract.IPubVi
                 break;
         }
     }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -242,6 +245,26 @@ public class PublishActivity extends BaseActivity implements IPubContract.IPubVi
         intent.putExtra("scale", true);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
         startActivityForResult(intent, CROP_PHOTO);
+    }
+
+    /**
+     * 返回按钮，是否取消发布
+     */
+    private void isStopPublish() {
+        final AlertDialog.Builder builder = showAlertDialog("提示","是否取消发布活动",false);
+        builder.setNegativeButton("我要取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                finish();
+            }
+        }).setPositiveButton("不，我要继续", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //取消提示框
+                PublishActivity.super.dismissAlertDialog(alertDialog);
+            }
+        });
+        alertDialog = builder.show();
     }
 
 }

@@ -2,6 +2,8 @@ package com.xiaoguang.happytoplay.presenter;
 
 import android.animation.Animator;
 import android.animation.ObjectAnimator;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.view.View;
 
@@ -13,10 +15,20 @@ import com.xiaoguang.happytoplay.model.GratherModelImpl;
 import com.xiaoguang.happytoplay.utils.LogUtils;
 import com.xiaoguang.happytoplay.utils.NetWorkStateUtils;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Response;
 
 /**
  * Created by 11655 on 2016/9/27.
@@ -32,6 +44,8 @@ public class WelPresenterImpl implements IWelContract.IWelPresenter {
     private boolean currentNetworkState = false;
     //声明一个活动id
     private String currentGratherId;
+    //声明SharedPreferences对象
+    private SharedPreferences perferences;
 
     public WelPresenterImpl(IWelContract.IWelView view) {
         this.view = view;
@@ -130,7 +144,6 @@ public class WelPresenterImpl implements IWelContract.IWelPresenter {
         /*
             2016.10.5修改，将直接使用Bmob提供的方法判断用户是否登陆过
          */
-
         //获取当前User对象
         User currentUser = BmobUser.getCurrentUser(User.class);
         //判断当前user 是否为空，不为空则登陆过，为空则为第一个登陆
@@ -172,6 +185,7 @@ public class WelPresenterImpl implements IWelContract.IWelPresenter {
                 currentNetworkState = NetWorkStateUtils.isNetworkAvailable(MyApplitation.context);
                 //从服务器获取数据
                 getGrathersFromServer();
+                getCitysFromService();
             }
 
             @Override
@@ -192,5 +206,86 @@ public class WelPresenterImpl implements IWelContract.IWelPresenter {
 
             }
         });
+    }
+
+    /**
+     * 获取城市信息
+     */
+    private void getCitysFromService() {
+        //获取编辑器对象
+        perferences = MyApplitation.context.getSharedPreferences("citys", Context.MODE_PRIVATE);
+        boolean flag = perferences.getBoolean("exist",false);
+        if (flag){//本地存在数据
+            String result = perferences.getString("citys","");
+            parsingJSONCitys(result);
+            return;
+        }
+        //定义请求服务器URL
+        final String SERVER_URL = "http://bmob-cdn-6590.b0.upaiyun.com/2016/10/11/54b0a73340c55cc080545797369d1daa.html";
+        //实例化OKHttpClient 对象
+        OkHttpClient okHttpClient = new OkHttpClient();
+        final okhttp3.Request request = new okhttp3.Request.Builder()
+                .url(SERVER_URL)
+                .build();
+        Call call = okHttpClient.newCall(request);
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                //打印错误信息
+                LogUtils.i(e.toString());
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                //获取服务器返回的信息
+                String result = response.body().string();
+                LogUtils.i("获取到城市信息为" + result);
+                //将城市信息保存到本地
+                savaCitysDataToLocation(result);
+                //解析城市
+                 parsingJSONCitys(result);
+            }
+        });
+    }
+
+    /**
+     * 解析城市数据
+     * @param result
+     */
+    private void parsingJSONCitys(String result) {
+        List citys = new ArrayList();
+        //开始解析
+        try {
+            JSONObject object = new JSONObject(result);
+            JSONArray array = object.getJSONArray("result");
+            for (int i = 0; i < array.length(); i++) {
+                JSONObject object2 = array.getJSONObject(i);
+                JSONArray array2 = object2.getJSONArray("city");
+                for (int j = 0; j < array2.length(); j++) {
+                    JSONObject object3 = array2.getJSONObject(j);
+                    //将获取的城市信息放到List集合中
+                    citys.add(object3.get("city"));
+                }
+            }
+            //将城市信息保存到内存中
+            MyApplitation.putDatas("cityList",citys);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 将城市列表信息保存到本地
+     * @param result 城市的Json字符串
+     */
+    private void savaCitysDataToLocation(String result) {
+        //获取编辑器对象
+        SharedPreferences.Editor editor = perferences.edit();
+        //存放一个标记，用于判断本地是否存在数据
+        editor.putBoolean("exist",true);
+        //将城市数据存入文件
+        editor.putString("citys",result);
+        //提交数据
+        editor.commit();
     }
 }
