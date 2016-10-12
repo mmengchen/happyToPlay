@@ -187,7 +187,7 @@ public class PublishPresenterImpl implements IPubContract.IPubPresenter {
                                 view.hiddenLoading();
                                 view.showMsg("活动发布成功");
                                 LogUtils.i("活动发送成功");
-                                //关掉此Activity
+                                //跳转到提示界面
                                 view.jumpActivity();
                             } else {
                                 view.hiddenLoading();

@@ -35,6 +35,7 @@ import butterknife.OnClick;
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.datatype.BmobGeoPoint;
 
+import static com.baidu.location.b.g.R;
 import static com.xiaoguang.happytoplay.fragment.PersonFragment.CROP_PHOTO;
 import static com.xiaoguang.happytoplay.fragment.PersonFragment.GET_PHOTO;
 import static com.xiaoguang.happytoplay.fragment.PersonFragment.TAKE_PHOTO;
@@ -113,7 +114,9 @@ public class PublishActivity extends BaseActivity implements IPubContract.IPubVi
 
     @Override
     public void jumpActivity() {
-        //发布成功后结束自己
+        //发布成功后跳转到提示界面
+        startActivity(new Intent(this,PublishTipActivity.class));
+        //结束掉自己
         finish();
     }
 

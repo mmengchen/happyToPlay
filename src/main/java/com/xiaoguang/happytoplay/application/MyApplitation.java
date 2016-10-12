@@ -14,6 +14,7 @@ import com.xiaoguang.happytoplay.utils.LogUtils;
 import java.util.HashMap;
 import java.util.Map;
 
+import c.b.BP;
 import cn.bmob.push.BmobPush;
 import cn.bmob.sms.BmobSMS;
 import cn.bmob.v3.Bmob;
@@ -62,7 +63,9 @@ public class MyApplitation extends Application{
         // 使用推送服务时的初始化操作
         BmobInstallation.getCurrentInstallation().save();
         // 启动推送服务
-        BmobPush.startWork(this);
+        BmobPush.startWork(context);
+        //初始化支付
+        BP.init(context,"89138a540444011eb66341febb70e16a");
         //初始化百度地图SDK
         SDKInitializer.initialize(getApplicationContext());
         mLocationClient = new LocationClient(getApplicationContext());     //声明LocationClient类

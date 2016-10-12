@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="支付测试"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="您正在进行支付，金额为："/>
+    <TextView
+        android:id="@+id/act_pay_tv_money"
+        android:gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0.01"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="员"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="收款方为第三方支付服务商，(付款成功后，将打款给对方)。如有问题，请联系（客服：18600434760）“"/>
+    <Button
+        android:id="@+id/act_pay_btn_weixin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="微信"/>
+    <Button
+        android:id="@+id/act_pay_alipay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="支付宝"/>
+</LinearLayout>

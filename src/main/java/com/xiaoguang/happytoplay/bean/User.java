@@ -26,6 +26,14 @@ public class User extends BmobUser {
      * 性别
      */
     private String sex;
+    /**
+     * 年龄
+     */
+    private int age;
+    /**
+     * 所在地区
+     */
+    private String address;
 
     /**
      * 收藏的活动的Id
@@ -69,6 +77,22 @@ public class User extends BmobUser {
 
     public void setLoveGratherIds(List<String> loveGratherIds) {
         this.loveGratherIds = loveGratherIds;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
     }
 
     @Override

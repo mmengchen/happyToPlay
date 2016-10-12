@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.xiaoguang.happytoplay">
+
     <!-- 允许联网 -->
     <uses-permission android:name="android.permission.INTERNET" />
     <!-- 获取GSM（2g）、WCDMA（联通3g）等网络状态的信息 -->
@@ -27,9 +28,10 @@
     <uses-permission android:name="android.permission.READ_PROFILE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
 
-    <!--推送所需的权限-->
+    <!-- 推送所需的权限 -->
     <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
     <application
         android:name=".application.MyApplitation"
         android:allowBackup="true"
@@ -50,25 +52,28 @@
         <activity android:name=".activity.HomeActivity" />
         <activity android:name=".activity.PublishActivity" />
         <activity android:name=".activity.MapActivity" />
-        <activity android:name=".activity.PersonDetailsActivity"/>
-        <!--BaiduMap start-->
-        <service android:name="com.baidu.location.f" android:enabled="true" android:process=":remote">
-        </service>
-        <!--BaiduMap end-->
+        <activity android:name=".activity.PersonDetailsActivity" />
+        <activity android:name=".activity.PayActivity"></activity>
+        <activity android:name=".activity.GratherDetailsActivity"/>
+        <activity android:name=".activity.PublishTipActivity"/>
+        <!-- BaiduMap start -->
+        <service
+            android:name="com.baidu.location.f"
+            android:enabled="true"
+            android:process=":remote"></service>
+        <!-- BaiduMap end -->
         <!-- BmobPush start -->
         <service
             android:label="PushService"
             android:name="cn.bmob.push.lib.service.PushService"
-            android:process="cn.bmob.push"
-            android:permission="cn.bmob.permission.push"
+            android:process=":bmobpush"
             android:exported="true">
             <intent-filter>
                 <action android:name="cn.bmob.push.lib.service.PushService"/>
             </intent-filter>
         </service>
-
         <receiver android:name="cn.bmob.push.PushReceiver" >
-            <intent-filter android:priority="2147483647" ><!--优先级加最高-->
+            <intent-filter>
                 <!-- 系统启动完成后会调用 -->
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <!-- 解锁完成后会调用 -->
@@ -79,8 +84,8 @@
         </receiver>
         <!-- 第四部中创建的消息接收器，在这里进行注册 -->
         <receiver android:name=".receiver.PushMessageReceiver">
-            <intent-filter >
-                <action android:name="cn.bmob.push.action.MESSAGE"/>
+            <intent-filter>
+                <action android:name="cn.bmob.push.action.MESSAGE" />
             </intent-filter>
         </receiver>
         <!-- BmobPush end -->
@@ -88,7 +93,7 @@
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="hBfiBDM9hw4lvy9egXgfN9RScGdfVSub" />
-        <!--Bmob 自动更新key-->
+        <!-- Bmob 自动更新key -->
         <meta-data
             android:name="BMOB_CHANNEL"
             android:value="Channel ID" />

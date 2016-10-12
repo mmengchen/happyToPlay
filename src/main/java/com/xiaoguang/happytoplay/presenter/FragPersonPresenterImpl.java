@@ -46,20 +46,6 @@ public class FragPersonPresenterImpl implements IFragPersonContract.IFragPersonP
         icoModel = new IcoModel();
         //进行数据的初始化操作
         start();
-//        ArrayAdapter adapter = new ArrayAdapter<>();
-//        ListView listView = new ListView();
-//        listView.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//            @Override
-//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-//                parent.getItemAtPosition(position);
-//
-//            }
-//
-//            @Override
-//            public void onNothingSelected(AdapterView<?> parent) {
-//
-//            }
-//        });
     }
 
     @Override
@@ -75,9 +61,24 @@ public class FragPersonPresenterImpl implements IFragPersonContract.IFragPersonP
         gv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                switch (position){
+                switch (position) {
+                    case 0:
+                        FragPersonPresenterImpl.this.view.jumpActivity(0);
+                        break;
+                    case 1:
+                        FragPersonPresenterImpl.this.view.jumpActivity(1);
+                        break;
+                    case 2:
+                        FragPersonPresenterImpl.this.view.jumpActivity(2);
+                        break;
+                    case 3:
+                        FragPersonPresenterImpl.this.view.jumpActivity(3);
+                        break;
+                    case 4://暂时跳转支付界面，用于进行支付测试
+                        FragPersonPresenterImpl.this.view.jumpActivity(4);
+                        break;
                     case 5://跳转到个人信息设置
-                        FragPersonPresenterImpl.this.view.jumpActivity();
+                        FragPersonPresenterImpl.this.view.jumpActivity(5);
                         break;
                 }
             }
@@ -91,8 +92,9 @@ public class FragPersonPresenterImpl implements IFragPersonContract.IFragPersonP
 
     /**
      * 从图库中选择（存在相关问题）
-     * @param context  上下文
-     * @param data 从系统图库返回的Intent
+     *
+     * @param context 上下文
+     * @param data    从系统图库返回的Intent
      */
     @Override
     public void setIcoHeader(Context context, Intent data) {
@@ -107,7 +109,7 @@ public class FragPersonPresenterImpl implements IFragPersonContract.IFragPersonP
         //将图片资源上传到服务器
         User user = new User();
         user.setUserHead(new BmobFile(new File(picturePath)));
-        upload(user,picturePath);
+        upload(user, picturePath);
         //加载进度条
         view.showLoading();
     }
@@ -120,10 +122,10 @@ public class FragPersonPresenterImpl implements IFragPersonContract.IFragPersonP
         BmobFile bmobFile = new BmobFile(new File(Environment.getExternalStorageDirectory() + "/icoImage.jpg"));
         User newUser = new User();
         newUser.setUserHead(bmobFile);
-       //获取当前图片uri
+        //获取当前图片uri
         String uri = bmobFile.getFileUrl();
         //上传图片
-        upload(newUser,uri);
+        upload(newUser, uri);
     }
 
     /**
@@ -139,7 +141,7 @@ public class FragPersonPresenterImpl implements IFragPersonContract.IFragPersonP
             public void success(final String uri) {
                 LogUtils.i("头像上传成功");
                 view.showMsg("头像上传成功");
-                icoModel.update(BmobUser.getCurrentUser(User.class).getObjectId(),user, new IcoModel.UpdateCallBack() {
+                icoModel.update(BmobUser.getCurrentUser(User.class).getObjectId(), user, new IcoModel.UpdateCallBack() {
                     @Override
                     public void success() {
                         LogUtils.i("更新信息成功");
@@ -152,8 +154,8 @@ public class FragPersonPresenterImpl implements IFragPersonContract.IFragPersonP
 
                     @Override
                     public void error(BmobException e) {
-                        LogUtils.i("更新信息失败"+e.toString());
-                        view.showMsg("更新信息失败"+e.toString());
+                        LogUtils.i("更新信息失败" + e.toString());
+                        view.showMsg("更新信息失败" + e.toString());
                         view.hiddenLoading();
                         view.displayImage(uri);
                     }
@@ -180,11 +182,11 @@ public class FragPersonPresenterImpl implements IFragPersonContract.IFragPersonP
         //获取当前在线的用户信息
         User currentUser = BmobUser.getCurrentUser(User.class);
         //判断当前头像是否为空
-        if(currentUser.getUserHead()!=null){
+        if (currentUser.getUserHead() != null) {
             //获取当前头像的uri
             String uri = currentUser.getUserHead().getFileUrl();
             //展示图片
-            LogUtils.i("我是在本地的文件的url为"+uri);
+            LogUtils.i("我是在本地的文件的url为" + uri);
             view.displayImage(uri);
             //取消显示框
             view.hiddenLoading();
@@ -195,21 +197,21 @@ public class FragPersonPresenterImpl implements IFragPersonContract.IFragPersonP
         query.getObject(currentUser.getObjectId(), new QueryListener<User>() {
             @Override
             public void done(User user, BmobException e) {
-                if (e==null){//查询成功
+                if (e == null) {//查询成功
                     //隐藏
                     view.hiddenLoading();
                     view.showMsg("刷新数据成功！");
                     //暂时只更新头像操作，不更新其他数据//暂未判断是否为空
-                    BmobFile file =user.getUserHead();
+                    BmobFile file = user.getUserHead();
                     //获取文件的url
                     String uri = file.getFileUrl();
                     //展示图片
-                    LogUtils.i("文件的url为"+uri);
+                    LogUtils.i("文件的url为" + uri);
                     view.displayImage(uri);
 
-                }else{//查询失败
-                    view.showMsg("刷新数据失败！"+e.toString());
-                    LogUtils.i("刷新数据失败"+e.toString());
+                } else {//查询失败
+                    view.showMsg("刷新数据失败！" + e.toString());
+                    LogUtils.i("刷新数据失败" + e.toString());
                     view.hiddenLoading();
                 }
             }

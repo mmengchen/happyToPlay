@@ -32,8 +32,10 @@ public interface IFragPersonContract {
 
         /**
          * 页面跳转
+         * @param type  跳转的类型
          */
-        void jumpActivity();
+
+        void jumpActivity(int type);
 
         /**
          * 返回

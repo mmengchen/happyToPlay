@@ -1,5 +1,10 @@
 package com.xiaoguang.happytoplay.presenter;
 
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.TextView;
+
+import com.xiaoguang.happytoplay.R;
 import com.xiaoguang.happytoplay.adapter.XListVewAdapter;
 import com.xiaoguang.happytoplay.application.MyApplitation;
 import com.xiaoguang.happytoplay.bean.Grather;
@@ -72,6 +77,16 @@ public class FragHomePresenterImpl implements IFragHomeContract.IFragHomePresent
                             view.showMsg("刷新失败");
                             LogUtils.i("刷新失败" + e.toString());
                         }
+                    }
+                });
+                xlistview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                      TextView tv =  (TextView)view.findViewById(R.id.frag_home_xlv_item_tv_message);
+                       String s = tv.getText().toString();
+                        LogUtils.i("我选中了ListView 中的item"+s);
+                        //跳转到活动详情页面
+                        FragHomePresenterImpl.this.view.jumpActivity();
                     }
                 });
             }

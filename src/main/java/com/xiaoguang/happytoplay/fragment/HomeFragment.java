@@ -1,5 +1,6 @@
 package com.xiaoguang.happytoplay.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -10,6 +11,7 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.xiaoguang.happytoplay.R;
+import com.xiaoguang.happytoplay.activity.GratherDetailsActivity;
 import com.xiaoguang.happytoplay.base.BaseFragment;
 import com.xiaoguang.happytoplay.contract.IFragHomeContract;
 import com.xiaoguang.happytoplay.presenter.FragHomePresenterImpl;
@@ -92,7 +94,7 @@ public class HomeFragment extends BaseFragment implements IFragHomeContract.IFra
 
     @Override
     public void jumpActivity() {
-
+        startActivity(new Intent(getContext(), GratherDetailsActivity.class));
     }
 
     @Override

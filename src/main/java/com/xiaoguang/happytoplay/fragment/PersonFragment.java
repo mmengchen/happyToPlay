@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.xiaoguang.happytoplay.R;
+import com.xiaoguang.happytoplay.activity.PayActivity;
 import com.xiaoguang.happytoplay.activity.PersonDetailsActivity;
 import com.xiaoguang.happytoplay.application.MyApplitation;
 import com.xiaoguang.happytoplay.base.BaseFragment;
@@ -128,6 +129,7 @@ public class PersonFragment extends BaseFragment implements IFragPersonContract.
         super.dismissProcessDialog();
     }
 
+
     @Override
     public void setPresenter(IFragPersonContract.IFragPersonPresenter presenter) {
         this.presenter = presenter;
@@ -135,7 +137,22 @@ public class PersonFragment extends BaseFragment implements IFragPersonContract.
 
     @Override
     public void jumpActivity() {
-        startActivity(new Intent(getContext(), PersonDetailsActivity.class));
+
+    }
+
+    @Override
+    public void jumpActivity(int type) {
+        //用于进行支付功能测试
+        switch (type) {
+            case 4:
+                startActivity(new Intent(getContext(), PayActivity.class));
+                break;
+            case 5:
+                Intent intent = new Intent(getContext(), PersonDetailsActivity.class);
+                //跳转到个人详情
+                startActivity(intent);
+                break;
+        }
     }
 
     @Override
@@ -148,10 +165,9 @@ public class PersonFragment extends BaseFragment implements IFragPersonContract.
         //显示数据到控件上
         mFragPersonTvNickname.setText(MyApplitation.user.getNickName());
         mFragPersonTvPhone.setText("账号：" + MyApplitation.user.getUsername());
-        //以下数据暂时固定
-        mFragPersonTvSex.setText("男");
-        mFragPersonTvAge.setText("22岁");
-        mFragPersonTvLocation.setText("北京昌平");
+        mFragPersonTvSex.setText(MyApplitation.user.getSex());
+        mFragPersonTvAge.setText(String.valueOf(MyApplitation.user.getAge())+" 岁");
+        mFragPersonTvLocation.setText(MyApplitation.user.getAddress());
         //加载头像
         presenter.loadHeader();
     }
@@ -200,6 +216,7 @@ public class PersonFragment extends BaseFragment implements IFragPersonContract.
         // 显示底部菜单
         bottomPopView.show();
     }
+
     //获取图片  ,存在问题：1.拍照时无法进行图片的裁剪（不断加载）（解决）  2.从图库中找图片时，出现空指针异常(解决)
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -237,6 +254,7 @@ public class PersonFragment extends BaseFragment implements IFragPersonContract.
         intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
         startActivityForResult(intent, CROP_PHOTO);
     }
+
     @Override
     public void displayImage(String uri) {
         //设置图片加载器的参数
