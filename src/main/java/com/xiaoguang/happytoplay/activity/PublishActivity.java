@@ -35,7 +35,6 @@ import butterknife.OnClick;
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.datatype.BmobGeoPoint;
 
-import static com.baidu.location.b.g.R;
 import static com.xiaoguang.happytoplay.fragment.PersonFragment.CROP_PHOTO;
 import static com.xiaoguang.happytoplay.fragment.PersonFragment.GET_PHOTO;
 import static com.xiaoguang.happytoplay.fragment.PersonFragment.TAKE_PHOTO;
@@ -48,7 +47,7 @@ import static com.xiaoguang.happytoplay.fragment.PersonFragment.TAKE_PHOTO;
 public class PublishActivity extends BaseActivity implements IPubContract.IPubView {
 
     //获取控件
-    @BindView(R.id.act_publish_ib_back)
+//    @BindView(R.id.act_publish_ib_back)
     ImageButton mIbBack;
     @BindView(R.id.act_publish_ib_menu)
     ImageButton mIbMenu;
@@ -153,7 +152,6 @@ public class PublishActivity extends BaseActivity implements IPubContract.IPubVi
         return grather;
     }
 
-    @Override
     public void onCreateBottomMenu(View v) {
         //底部弹出的布局 照相和选择图片
         bottomPopView = new BottomPopView(this,v ) {

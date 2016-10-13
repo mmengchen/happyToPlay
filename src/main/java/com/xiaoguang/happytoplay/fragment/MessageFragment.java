@@ -9,11 +9,11 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 
 import com.xiaoguang.happytoplay.R;
+import com.xiaoguang.happytoplay.base.BaseFragment;
 import com.xiaoguang.happytoplay.contract.IFragMsgContract;
 import com.xiaoguang.happytoplay.presenter.FragMsgPresenterImpl;
 
@@ -28,7 +28,7 @@ import butterknife.OnClick;
  * Created by 11655 on 2016/9/28.
  */
 
-public class MessageFragment extends Fragment implements IFragMsgContract.IFragMsgView {
+public class MessageFragment extends BaseFragment implements IFragMsgContract.IFragMsgView {
 
     @BindView(R.id.frag_message_btn_friend)
     Button mFragMessageBtnFriend;
@@ -54,11 +54,9 @@ public class MessageFragment extends Fragment implements IFragMsgContract.IFragM
         //获取子FragmentManager对象
         new FragMsgPresenterImpl(this);
     }
-
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.frag_message, container, false);
+    protected View initLayout(LayoutInflater inflater) {
+        View view = inflater.inflate(R.layout.frag_message, null);
         ButterKnife.bind(this, view);
         initDatas();
         //实例化适配器对象，并且重写方法

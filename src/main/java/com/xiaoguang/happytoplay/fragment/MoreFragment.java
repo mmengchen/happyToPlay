@@ -2,10 +2,8 @@ package com.xiaoguang.happytoplay.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -13,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 
 import com.xiaoguang.happytoplay.R;
+import com.xiaoguang.happytoplay.base.BaseFragment;
 import com.xiaoguang.happytoplay.contract.IFragMoreContract;
 import com.xiaoguang.happytoplay.presenter.FragMorePresenterImpl;
 
@@ -24,7 +23,7 @@ import butterknife.OnClick;
  * Created by 11655 on 2016/9/28.
  */
 
-public class MoreFragment extends Fragment implements IFragMoreContract.IFragMoreView {
+public class MoreFragment extends BaseFragment implements IFragMoreContract.IFragMoreView {
 
     @BindView(R.id.frag_more_sp)
     Spinner mFragMoreSp;
@@ -69,10 +68,8 @@ public class MoreFragment extends Fragment implements IFragMoreContract.IFragMor
         super.onCreate(savedInstanceState);
 
     }
-
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    protected View initLayout(LayoutInflater inflater) {
         View view = inflater.inflate(R.layout.frag_more, null);
         ButterKnife.bind(this, view);
         return view;

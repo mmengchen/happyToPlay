@@ -2,22 +2,20 @@ package com.xiaoguang.happytoplay.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.xiaoguang.happytoplay.R;
+import com.xiaoguang.happytoplay.base.BaseFragment;
 import com.xiaoguang.happytoplay.contract.IFragAddContract;
 
 /**
  * Created by 11655 on 2016/9/28.
  */
 
-public class AddFragment extends Fragment implements IFragAddContract.IFragAddView{
-    @Nullable
+public class AddFragment extends BaseFragment implements IFragAddContract.IFragAddView{
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    protected View initLayout(LayoutInflater inflater) {
         return inflater.inflate(R.layout.frag_add,null);
     }
 

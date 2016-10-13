@@ -4,8 +4,13 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Bundle;
 import android.provider.Settings;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 /**
  * 所有fagment基类
@@ -18,6 +23,23 @@ public abstract class BaseFragment extends Fragment {
     private AlertDialog alertDialog;
     //声明一个构建着对象，用于创建警告对话框
     private AlertDialog.Builder builder;
+    //创建View对象，用于Fragment的优化
+    private View contentView = null;
+    @Nullable
+    @Override
+    public final View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        if (contentView == null){
+            contentView = initLayout(inflater);
+        }
+        return contentView;
+    }
+
+    /**
+     * 初始化Fragment布局
+     * @param inflater
+     * @return
+     */
+    protected abstract View initLayout(LayoutInflater inflater);
     /**
      *  功能 ：显示一个警告对话框
      */

@@ -8,7 +8,6 @@ import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -92,9 +91,8 @@ public class PersonFragment extends BaseFragment implements IFragPersonContract.
 
     }
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    protected View initLayout(LayoutInflater inflater) {
         View view = inflater.inflate(R.layout.frag_person, null);
         ButterKnife.bind(this, view);
         //加载数据（不是很合理，会造成卡顿现象）
@@ -166,7 +164,7 @@ public class PersonFragment extends BaseFragment implements IFragPersonContract.
         mFragPersonTvNickname.setText(MyApplitation.user.getNickName());
         mFragPersonTvPhone.setText("账号：" + MyApplitation.user.getUsername());
         mFragPersonTvSex.setText(MyApplitation.user.getSex());
-        mFragPersonTvAge.setText(String.valueOf(MyApplitation.user.getAge())+" 岁");
+        mFragPersonTvAge.setText(String.valueOf(MyApplitation.user.getAge()) + " 岁");
         mFragPersonTvLocation.setText(MyApplitation.user.getAddress());
         //加载头像
         presenter.loadHeader();

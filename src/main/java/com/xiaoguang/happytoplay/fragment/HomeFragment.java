@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
@@ -49,14 +48,19 @@ public class HomeFragment extends BaseFragment implements IFragHomeContract.IFra
         super.onCreate(savedInstanceState);
         new FragHomePresenterImpl(this);
     }
-
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    protected View initLayout(LayoutInflater inflater) {
         View view = inflater.inflate(R.layout.frag_home, null);
         ButterKnife.bind(this, view);
         return view;
     }
+//    @Nullable
+//    @Override
+//    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+//        View view = inflater.inflate(R.layout.frag_home, null);
+//        ButterKnife.bind(this, view);
+//        return view;
+//    }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -163,4 +167,5 @@ public class HomeFragment extends BaseFragment implements IFragHomeContract.IFra
             System.exit(0);
         }
     }
+
 }
