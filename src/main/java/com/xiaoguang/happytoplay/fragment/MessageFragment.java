@@ -30,6 +30,7 @@ import butterknife.OnClick;
 
 public class MessageFragment extends BaseFragment implements IFragMsgContract.IFragMsgView {
 
+    //使用绑定的方式获取控件对象
     @BindView(R.id.frag_message_btn_friend)
     Button mFragMessageBtnFriend;
     @BindView(R.id.frag_message_btn_grahter)
@@ -71,7 +72,7 @@ public class MessageFragment extends BaseFragment implements IFragMsgContract.IF
                 return mFragments.get(position);
             }
         };
-        //设置viewPager为不可滑动状态
+        //设置viewPager为不可滑动状态,存在主Fragment无法切换左右切换
         mFragMessageViewPager.setOnTouchListener( new View.OnTouchListener()
         {
             @Override
@@ -95,6 +96,7 @@ public class MessageFragment extends BaseFragment implements IFragMsgContract.IF
             @Override
             public void onPageSelected(int position) {
                 currentIndex = position;
+
             }
 
             @Override

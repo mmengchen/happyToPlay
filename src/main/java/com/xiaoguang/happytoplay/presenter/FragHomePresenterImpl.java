@@ -57,7 +57,7 @@ public class FragHomePresenterImpl implements IFragHomeContract.IFragHomePresent
              */
             @Override
             public void onRefresh() {
-                gratherModel.queryGrather(100, null, 0, 10, new GratherModelImpl.QueryCallBack<Grather>() {
+                gratherModel.queryGrather(100, null, 0, 10,null, new GratherModelImpl.QueryCallBack<Grather>() {
                     @Override
                     public void done(List<Grather> result, BmobException e) {
                         if (e == null) {
@@ -96,7 +96,7 @@ public class FragHomePresenterImpl implements IFragHomeContract.IFragHomePresent
              */
             @Override
             public void onLoadMore() {
-                gratherModel.queryGrather(200, null, grathers.size(), 10, new GratherModelImpl.QueryCallBack<Grather>() {
+                gratherModel.queryGrather(200, null, grathers.size(), 10,null, new GratherModelImpl.QueryCallBack<Grather>() {
                     @Override
                     public void done(List<Grather> result, BmobException e) {
 

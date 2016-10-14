@@ -10,8 +10,8 @@ android {
         minSdkVersion 19
         targetSdkVersion 24
         versionCode 1
-        versionName "0.1Bata"
-
+        versionName "1"
+        multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
     }
@@ -37,9 +37,7 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile 'com.jakewharton:butterknife:8.0.1'
     apt 'com.jakewharton:butterknife-compiler:8.0.1'
-    //以下SDK开发者请根据需要自行选择
     //bmob-sdk：Bmob的android sdk包，包含了Bmob的数据存储、文件等服务，以下是最新的bmob-sdk:
-    //3.5.0：请务必查看下面注释[1]
     compile 'cn.bmob.android:bmob-sdk:3.5.0'
     //bmob-push：Bmob的推送包
     compile 'cn.bmob.android:bmob-push:0.8'

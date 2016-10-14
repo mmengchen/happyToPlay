@@ -333,22 +333,13 @@
                 android:text="聚会" />
         </LinearLayout>
     </LinearLayout>
-
-    <!--中间按钮部分结束-->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="5dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="5dp">
+    <!--中间结束-->
 
         <ImageView
             android:id="@+id/frag_more_iv_ad"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_margin="10dp"
             android:clickable="true"
-            android:scaleType="fitXY"
             android:src="@drawable/pager1" />
-    </LinearLayout>
 </LinearLayout>

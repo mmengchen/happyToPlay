@@ -1,5 +1,6 @@
 package com.xiaoguang.happytoplay.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -11,9 +12,15 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 
 import com.xiaoguang.happytoplay.R;
+import com.xiaoguang.happytoplay.activity.ShowResultActivity;
+import com.xiaoguang.happytoplay.application.MyApplitation;
 import com.xiaoguang.happytoplay.base.BaseFragment;
+import com.xiaoguang.happytoplay.bean.Grather;
 import com.xiaoguang.happytoplay.contract.IFragMoreContract;
 import com.xiaoguang.happytoplay.presenter.FragMorePresenterImpl;
+import com.xiaoguang.happytoplay.utils.ToastUtils;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -85,17 +92,17 @@ public class MoreFragment extends BaseFragment implements IFragMoreContract.IFra
 
     @Override
     public void showMsg(String msg) {
-
+        ToastUtils.toastShort(msg);
     }
 
     @Override
     public void showLoading() {
-
+        super.showProcessDialog("查询数据中","数据查询中，请稍等",false);
     }
 
     @Override
     public void hiddenLoading() {
-
+        super.dismissProcessDialog();
     }
 
     @Override
@@ -109,54 +116,75 @@ public class MoreFragment extends BaseFragment implements IFragMoreContract.IFra
     }
 
     @Override
+    public void jumpActivity(List<Grather> datas){
+        //将数据显示到内存中
+        MyApplitation.putDatas("queryDatas",datas);
+        //跳转到信息显示界面
+        Intent intent = new Intent(getContext(), ShowResultActivity.class);
+        startActivity(intent);
+    }
+
+    @Override
     public boolean back() {
         return false;
     }
 
-    @Override
-    public void setData(Object... object) {
-
-    }
-
-    @Override
-    public void getData() {
-
-    }
-
+    /**
+     * 查询界面
+     * @param view
+     */
     @OnClick({R.id.frag_more_iv_search, R.id.frag_more_iv_top, R.id.frag_more_btn_free, R.id.frag_more_btn_hot, R.id.frag_more_btn_near, R.id.frag_more_ln_zhoubian, R.id.frag_more_ln_shaoer, R.id.frag_more_ln_diy, R.id.frag_more_ln_jianshen, R.id.frag_more_ln_jishi, R.id.frag_more_ln_yanchu, R.id.frag_more_ln_zhanlan, R.id.frag_more_ln_shalong, R.id.frag_more_ln_pincha, R.id.frag_more_ln_jihui, R.id.frag_more_iv_ad})
     public void onClick(View view) {
+
         switch (view.getId()) {
             case R.id.frag_more_iv_search:
+                //获取文本数据
+                String datas = mFragMoreEdSearch.getText().toString();
+                //查询数据
+                presenter.query(datas,0);
                 break;
-            case R.id.frag_more_iv_top:
+            case R.id.frag_more_iv_top://头部广告
                 break;
             case R.id.frag_more_btn_free:
+                presenter.query("免费",1);
                 break;
             case R.id.frag_more_btn_hot:
+                presenter.query("热门",2);
                 break;
             case R.id.frag_more_btn_near:
+                presenter.query("附近",3);
                 break;
             case R.id.frag_more_ln_zhoubian:
+                presenter.query("周边",4);
                 break;
             case R.id.frag_more_ln_shaoer:
+                presenter.query("少儿",4);
                 break;
             case R.id.frag_more_ln_diy:
+                presenter.query("DIY",4);
                 break;
             case R.id.frag_more_ln_jianshen:
+                presenter.query("健身",4);
                 break;
             case R.id.frag_more_ln_jishi:
+                presenter.query("集市",4);
                 break;
             case R.id.frag_more_ln_yanchu:
+                presenter.query("演出",4);
                 break;
             case R.id.frag_more_ln_zhanlan:
+                presenter.query("展览",4);
                 break;
             case R.id.frag_more_ln_shalong:
+                presenter.query("沙龙",4);
                 break;
             case R.id.frag_more_ln_pincha:
+                presenter.query("品茶",4);
                 break;
             case R.id.frag_more_ln_jihui:
+                presenter.query("聚会",4);
                 break;
-            case R.id.frag_more_iv_ad:
+            case R.id.frag_more_iv_ad://广告
                 break;
         }
     }

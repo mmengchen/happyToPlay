@@ -12,7 +12,7 @@ import cn.bmob.v3.datatype.BmobGeoPoint;
  * Created by 11655 on 2016/10/6.
  */
 
-public class Grather extends BmobObject {
+public class Grather extends BmobObject{
     //活动名称
     private String gratherName;
     //活动类型

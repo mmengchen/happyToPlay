@@ -37,21 +37,16 @@ public class XListVewAdapter extends BaseAdapter {
     /**
      * 数据源
      */
-    private List<Grather> grathers;
+    private List<Grather> grathers = new ArrayList<>();
     private LayoutInflater inflater;
     //设置图片加载器的参数
     private final DisplayImageOptions options;
     //获取图片加载器对象
     private final ImageLoader loader;
-    //活动发布人的集合
-//    private Map<String, User> userMap = new HashMap<>();
-    ;
-
 
     public XListVewAdapter(Context context, List<Grather> grathers) {
         this.context = context;
         this.grathers = grathers;
-//        this.userMap = userMap;
         inflater = LayoutInflater.from(context);
         options = ImageLoaderutils.myGetOpt(R.drawable.loading, R.drawable.logding_error);
         loader = ImageLoaderutils.getInstance(MyApplitation.context);
