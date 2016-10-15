@@ -2,7 +2,7 @@ package com.xiaoguang.happytoplay.activity;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.widget.Button;
+import android.widget.TextView;
 
 import com.xiaoguang.happytoplay.R;
 import com.xiaoguang.happytoplay.application.MyApplitation;
@@ -27,8 +27,8 @@ public class ShowResultActivity extends BaseActivity implements IShowContract.IS
     //通过注解获取控件
     @BindView(R.id.act_show_result_xlv)
     XListView mActShowResultXlv;
-    @BindView(R.id.act_show_result_btn)
-    Button mActShowResultBtn;
+    @BindView(R.id.act_show_result_tv)
+    TextView mActShowResultTv;
     private IShowContract.IShowPresenter presenter;
 
     @Override
@@ -81,7 +81,7 @@ public class ShowResultActivity extends BaseActivity implements IShowContract.IS
         return (List) MyApplitation.getDatas("queryDatas", false);
     }
 
-    @OnClick(R.id.act_show_result_btn)
+    @OnClick(R.id.act_show_result_tv)
     public void onClick() {
         finish();
     }

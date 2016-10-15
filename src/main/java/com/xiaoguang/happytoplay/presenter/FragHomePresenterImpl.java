@@ -2,9 +2,7 @@ package com.xiaoguang.happytoplay.presenter;
 
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.TextView;
 
-import com.xiaoguang.happytoplay.R;
 import com.xiaoguang.happytoplay.adapter.XListVewAdapter;
 import com.xiaoguang.happytoplay.application.MyApplitation;
 import com.xiaoguang.happytoplay.bean.Grather;
@@ -17,6 +15,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.bmob.v3.exception.BmobException;
+
+import static com.xiaoguang.happytoplay.application.MyApplitation.getDatas;
 
 /**
  * FragmentHome 的Presenter类
@@ -46,6 +46,21 @@ public class FragHomePresenterImpl implements IFragHomeContract.IFragHomePresent
         adapter = new XListVewAdapter(MyApplitation.context, grathers);
         //设置适配器
         xlistview.setAdapter(adapter);
+        //设置Item点击事件
+        xlistview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                //从内存中获取活动集合
+                List<Grather> grathers = (List<Grather>) MyApplitation.getDatas("grathers",false);
+                //根据position获取选中的对象
+                Grather grather = grathers.get(position-1);
+                LogUtils.i("我选中了ListView 中的活动标题为"+grather.getGratherName());
+                //将选中的活动item 信息保存到内存中
+                MyApplitation.putDatas("selectItemData",grather);
+                //跳转到活动详情页面
+                FragHomePresenterImpl.this.view.jumpActivity();
+            }
+        });
         //为XlistView添加上拉刷新和下拉加载
         xlistview.setPullLoadEnable(true);
         xlistview.setPullLoadEnable(true);
@@ -77,16 +92,6 @@ public class FragHomePresenterImpl implements IFragHomeContract.IFragHomePresent
                             view.showMsg("刷新失败");
                             LogUtils.i("刷新失败" + e.toString());
                         }
-                    }
-                });
-                xlistview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                      TextView tv =  (TextView)view.findViewById(R.id.frag_home_xlv_item_tv_message);
-                       String s = tv.getText().toString();
-                        LogUtils.i("我选中了ListView 中的item"+s);
-                        //跳转到活动详情页面
-                        FragHomePresenterImpl.this.view.jumpActivity();
                     }
                 });
             }
@@ -133,8 +138,8 @@ public class FragHomePresenterImpl implements IFragHomeContract.IFragHomePresent
     @Override
     public void start() {
         //初始化XlistView数据,从内存中获取活动数据
-        if ((List<Grather>) MyApplitation.getDatas("grathers", false)!=null){
-            grathers = (List<Grather>) MyApplitation.getDatas("grathers", false);
+        if ((List<Grather>) getDatas("grathers", false)!=null){
+            grathers = (List<Grather>) getDatas("grathers", false);
         }
     }
 }

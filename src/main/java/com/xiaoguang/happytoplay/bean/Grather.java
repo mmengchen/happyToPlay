@@ -12,7 +12,7 @@ import cn.bmob.v3.datatype.BmobGeoPoint;
  * Created by 11655 on 2016/10/6.
  */
 
-public class Grather extends BmobObject{
+public class Grather extends BmobObject {
     //活动名称
     private String gratherName;
     //活动类型
@@ -35,6 +35,8 @@ public class Grather extends BmobObject{
     private String address;
     //收藏活动的人
     private List<String> loveUserIds;
+    //评论的id
+    private List<String> discussIds;
 
     public Grather() {
     }
@@ -129,8 +131,16 @@ public class Grather extends BmobObject{
         return loveUserIds;
     }
 
+    public List<String> getDiscussIds() {
+        return discussIds;
+    }
+
     public void setLoveUserIds(List<String> loveUserIds) {
         this.loveUserIds = loveUserIds;
+    }
+
+    public void setDiscussIds(List<String> discussIds) {
+        this.discussIds = discussIds;
     }
 
     @Override
@@ -147,6 +157,7 @@ public class Grather extends BmobObject{
                 ", flag=" + flag +
                 ", address='" + address + '\'' +
                 ", loveUserIds=" + loveUserIds +
+                ", discussIds=" + discussIds +
                 '}';
     }
 }

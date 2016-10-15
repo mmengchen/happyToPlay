@@ -44,7 +44,6 @@ public class RegPresenterImpl implements IRegContract.IRegPresenter {
 
             @Override
             public void done(BmobException ex) {
-                // TODO Auto-generated method stub
                 if (ex == null) {//短信验证码已验证成功
                     Log.i("bmob", "验证通过");
                     view.showMsg("验证码验证成功");
@@ -53,7 +52,6 @@ public class RegPresenterImpl implements IRegContract.IRegPresenter {
                         @Override
                         public void onSuccess() {
                             LogUtils.i("myTag", "注册成功！");
-                            //取消进度条对话框
                             view.hiddenLoading();
                             //给用户提示
                             view.showMsg("注册成功！");

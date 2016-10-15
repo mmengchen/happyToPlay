@@ -115,7 +115,7 @@ public class WelPresenterImpl implements IWelContract.IWelPresenter {
         //实例化GratherModel对象
         GratherModelImpl gratherModelImpl = new GratherModelImpl();
         //调用model 层方法查询数据
-        gratherModelImpl.queryGrather(100, null, 0, 10, new GratherModelImpl.QueryCallBack<Grather>() {
+        gratherModelImpl.queryGrather(100, null, 0, 10, null, new GratherModelImpl.QueryCallBack<Grather>() {
             @Override
             public void done(final List<Grather> result, BmobException e) {
                 if (e == null) {
@@ -214,9 +214,9 @@ public class WelPresenterImpl implements IWelContract.IWelPresenter {
     private void getCitysFromService() {
         //获取编辑器对象
         perferences = MyApplitation.context.getSharedPreferences("citys", Context.MODE_PRIVATE);
-        boolean flag = perferences.getBoolean("exist",false);
-        if (flag){//本地存在数据
-            String result = perferences.getString("citys","");
+        boolean flag = perferences.getBoolean("exist", false);
+        if (flag) {//本地存在数据
+            String result = perferences.getString("citys", "");
             parsingJSONCitys(result);
             return;
         }
@@ -243,13 +243,14 @@ public class WelPresenterImpl implements IWelContract.IWelPresenter {
                 //将城市信息保存到本地
                 savaCitysDataToLocation(result);
                 //解析城市
-                 parsingJSONCitys(result);
+                parsingJSONCitys(result);
             }
         });
     }
 
     /**
      * 解析城市数据
+     *
      * @param result
      */
     private void parsingJSONCitys(String result) {
@@ -268,7 +269,7 @@ public class WelPresenterImpl implements IWelContract.IWelPresenter {
                 }
             }
             //将城市信息保存到内存中
-            MyApplitation.putDatas("cityList",citys);
+            MyApplitation.putDatas("cityList", citys);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -276,15 +277,16 @@ public class WelPresenterImpl implements IWelContract.IWelPresenter {
 
     /**
      * 将城市列表信息保存到本地
+     *
      * @param result 城市的Json字符串
      */
     private void savaCitysDataToLocation(String result) {
         //获取编辑器对象
         SharedPreferences.Editor editor = perferences.edit();
         //存放一个标记，用于判断本地是否存在数据
-        editor.putBoolean("exist",true);
+        editor.putBoolean("exist", true);
         //将城市数据存入文件
-        editor.putString("citys",result);
+        editor.putString("citys", result);
         //提交数据
         editor.commit();
     }

@@ -25,6 +25,7 @@ import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.datatype.BmobFile;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.QueryListener;
+import cn.bmob.v3.listener.UpdateListener;
 
 /**
  * 个人中心操作相关
@@ -38,6 +39,8 @@ public class FragPersonPresenterImpl implements IFragPersonContract.IFragPersonP
     //定一个数据源
     private List<String> datas;
     private IcoModel icoModel;
+    //头像默认的Url
+    private String URI_DEFAULT = "http://bmob-cdn-6590.b0.upaiyun.com/2016/10/16/f8bd4e9c40174c49805921fbe68b6745.png";
 
     //提供一个构造器
     public FragPersonPresenterImpl(IFragPersonContract.IFragPersonView view) {
@@ -135,7 +138,7 @@ public class FragPersonPresenterImpl implements IFragPersonContract.IFragPersonP
      */
     private void upload(final User user, final String uri) {
         LogUtils.i("我正在执行文件上传");
-        //调用model层的上传文件的方法  方法
+        //调用model层的上传文件的方法
         icoModel.upload(user, new IcoModel.UploadCallBack() {
             @Override
             public void success(final String uri) {
@@ -145,11 +148,11 @@ public class FragPersonPresenterImpl implements IFragPersonContract.IFragPersonP
                     @Override
                     public void success() {
                         LogUtils.i("更新信息成功");
-                        view.showMsg("更新信息成功");
                         //进行图片的显示
                         view.displayImage(uri);
                         //隐藏加载框
                         view.hiddenLoading();
+                        view.showMsg("更新信息成功");
                     }
 
                     @Override
@@ -157,7 +160,21 @@ public class FragPersonPresenterImpl implements IFragPersonContract.IFragPersonP
                         LogUtils.i("更新信息失败" + e.toString());
                         view.showMsg("更新信息失败" + e.toString());
                         view.hiddenLoading();
-                        view.displayImage(uri);
+                        //显示默认头像,将文件删除
+                        view.displayImage(URI_DEFAULT);
+                        BmobFile file = new BmobFile();
+                        file.setUrl(uri);//此url是上传文件成功之后通过bmobFile.getUrl()方法获取的。
+                        file.delete(new UpdateListener() {
+
+                            @Override
+                            public void done(BmobException e) {
+                                if(e==null){
+                                    LogUtils.i("文件删除成功");
+                                }else{
+                                    LogUtils.i("文件删除失败"+e.toString());
+                                }
+                            }
+                        });
                     }
                 });
             }
@@ -182,7 +199,7 @@ public class FragPersonPresenterImpl implements IFragPersonContract.IFragPersonP
         //获取当前在线的用户信息
         User currentUser = BmobUser.getCurrentUser(User.class);
         //判断当前头像是否为空
-        if (currentUser.getUserHead() != null) {
+        if (currentUser.getUserHead().getUrl()!= null) {
             //获取当前头像的uri
             String uri = currentUser.getUserHead().getFileUrl();
             //展示图片
@@ -212,7 +229,10 @@ public class FragPersonPresenterImpl implements IFragPersonContract.IFragPersonP
                 } else {//查询失败
                     view.showMsg("刷新数据失败！" + e.toString());
                     LogUtils.i("刷新数据失败" + e.toString());
+                    view.displayImage(URI_DEFAULT);
                     view.hiddenLoading();
+                    //显示默认头像
+                    view.displayImage(URI_DEFAULT);
                 }
             }
         });

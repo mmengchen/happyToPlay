@@ -18,7 +18,7 @@ public interface IBaseContract {
         /**
          * 加载提示框
          */
-        void showLoading();
+        void showLoading(String title, String msg, boolean flag);
 
         /**
          * 隐藏提示框

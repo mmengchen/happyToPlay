@@ -36,9 +36,18 @@ public class User extends BmobUser {
     private String address;
 
     /**
+     * 用户的RMB
+     */
+    private double money;
+
+    /**
      * 收藏的活动的Id
      */
     private List<String> loveGratherIds;
+    /**
+     * 参加的活动
+     */
+    private List<String> joinGratherIds;
 
 
     public String getNickName() {
@@ -93,6 +102,22 @@ public class User extends BmobUser {
 
     public void setAge(int age) {
         this.age = age;
+    }
+
+    public List<String> getJoinGratherIds() {
+        return joinGratherIds;
+    }
+
+    public void setJoinGratherIds(List<String> joinGratherIds) {
+        this.joinGratherIds = joinGratherIds;
+    }
+
+    public double getMoney() {
+        return money;
+    }
+
+    public void setMoney(double money) {
+        this.money = money;
     }
 
     @Override

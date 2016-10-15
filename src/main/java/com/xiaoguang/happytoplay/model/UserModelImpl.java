@@ -14,7 +14,7 @@ import cn.bmob.v3.listener.QueryListener;
 public class UserModelImpl {
     public void queryUsers(String objectId, final QueryUserCallBack callBack){
         BmobQuery<User> query = new BmobQuery<User>();
-        //根据Id查询发布人的信息
+        //根据Id查询用户的信息
         query.getObject(objectId, new QueryListener<User>() {
             @Override
             public void done(User user, BmobException e) {

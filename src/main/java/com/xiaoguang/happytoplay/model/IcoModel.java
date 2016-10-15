@@ -8,7 +8,7 @@ import cn.bmob.v3.listener.UpdateListener;
 import cn.bmob.v3.listener.UploadFileListener;
 
 /**
- * 对头像操作的类
+ * 对头像操作的类，可以进行优化，，将上传和更新放入一个
  * Created by 11655 on 2016/9/29.
  */
 

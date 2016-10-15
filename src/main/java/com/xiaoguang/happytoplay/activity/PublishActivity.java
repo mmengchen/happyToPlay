@@ -47,7 +47,7 @@ import static com.xiaoguang.happytoplay.fragment.PersonFragment.TAKE_PHOTO;
 public class PublishActivity extends BaseActivity implements IPubContract.IPubView {
 
     //获取控件
-//    @BindView(R.id.act_publish_ib_back)
+    @BindView(R.id.act_publish_ib_back)
     ImageButton mIbBack;
     @BindView(R.id.act_publish_ib_menu)
     ImageButton mIbMenu;

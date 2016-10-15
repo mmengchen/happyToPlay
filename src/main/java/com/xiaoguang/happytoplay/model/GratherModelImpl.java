@@ -2,6 +2,7 @@ package com.xiaoguang.happytoplay.model;
 
 import com.xiaoguang.happytoplay.bean.Grather;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import cn.bmob.v3.BmobQuery;
@@ -10,6 +11,7 @@ import cn.bmob.v3.datatype.BmobGeoPoint;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.SaveListener;
+import cn.bmob.v3.listener.UpdateListener;
 import cn.bmob.v3.listener.UploadBatchListener;
 
 /**
@@ -70,8 +72,8 @@ public class GratherModelImpl {
      * @param queryCallBack 查询的回调方法
      * @param bmobGeoPoint 距离查询，配合500使用
      */
-    public void queryGrather(int queryType, String dataType, int skip, int counts,BmobGeoPoint bmobGeoPoint, final QueryCallBack<Grather> queryCallBack) {
-        BmobQuery<Grather> query = new BmobQuery<>();
+    public void queryGrather(final int queryType, String dataType, int skip, int counts, BmobGeoPoint bmobGeoPoint, final QueryCallBack<Grather> queryCallBack) {
+        final BmobQuery<Grather> query = new BmobQuery<>();
         switch (queryType) {
             case 100:
                 //设置默认查询10条
@@ -91,11 +93,10 @@ public class GratherModelImpl {
                 query.addWhereEqualTo("gratherType", dataType);
                 break;
             case 500://距离查询
-                query.addWhereNear("gpsAdd",bmobGeoPoint);
+                query.addWhereNear("gratherGeoPoint",bmobGeoPoint);
                 query.setLimit(10);    //获取最接近用户地点的10条数据
                 break;
-            case 600://根据点赞数量进行排序查询（暂时有问题）
-                query.addWhereEqualTo("objectId", "Barbie");
+            case 600://根据根据点赞数量较多的数据进行查询，默认点赞数量大于5
                 break;
             case 700://查询免费活动
                 query.addWhereEqualTo("gratherMoney",0);
@@ -105,11 +106,36 @@ public class GratherModelImpl {
         query.findObjects(new FindListener<Grather>() {
             @Override
             public void done(List<Grather> list, BmobException e) {
-                queryCallBack.done(list, e);
+                if (queryType == 600){//点赞查询默认显示几条数据
+                    List<Grather> lists = new ArrayList<Grather>();
+                    for (Grather grather:
+                         list) {
+                        if (grather.getLoveUserIds().size()>5){//点赞数大于5则显示数据
+                            lists.add(grather);
+                        }
+                    }
+                    queryCallBack.done(lists,e);
+                }else {
+                    queryCallBack.done(list, e);
+                }
             }
         });
     }
 
+    /**
+     * 更新活动的方法
+     * @param objectId  活动ID
+     * @param grather   新的活动对象
+     * @param callBack  回调方法
+     */
+    public void Update(String objectId, Grather grather, final UpdateCallBack callBack){
+        grather.update(objectId, new UpdateListener() {
+            @Override
+            public void done(BmobException e) {
+                callBack.done(e);
+            }
+        });
+    }
     /**
      * 批量上传的回调接口
      */
@@ -135,5 +161,9 @@ public class GratherModelImpl {
      */
     public interface QueryCallBack<T> {
         void done(List<T> result, BmobException e);
+    }
+
+    public interface UpdateCallBack{
+        void done(BmobException e);
     }
 }

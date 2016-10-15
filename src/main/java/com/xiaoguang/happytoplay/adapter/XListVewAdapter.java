@@ -43,6 +43,8 @@ public class XListVewAdapter extends BaseAdapter {
     private final DisplayImageOptions options;
     //获取图片加载器对象
     private final ImageLoader loader;
+    //头像默认的Url
+    private String URI_DEFAULT = "http://bmob-cdn-6590.b0.upaiyun.com/2016/10/16/f8bd4e9c40174c49805921fbe68b6745.png";
 
     public XListVewAdapter(Context context, List<Grather> grathers) {
         this.context = context;
@@ -98,15 +100,24 @@ public class XListVewAdapter extends BaseAdapter {
         u.queryUsers(grathers.get(position).getGratherOriginator(), new UserModelImpl.QueryUserCallBack() {
             @Override
             public void onDone(User user, BmobException e) {
-                loader.displayImage(user.getUserHead().getUrl(), viewHolder.mcircleImageViewHead, options);
-                //设置性别图标
-                if ("男".equals(user.getSex())) {
-                    viewHolder.mImageViewSex.setImageResource(R.drawable.boy);
-                } else {
-                    viewHolder.mImageViewSex.setImageResource(R.drawable.gril);
+                if(e==null){
+                    //设置头像信息
+                    if (user.getUserHead().getUrl()==null){//如果用户没有头像，则显示默认头像
+                        loader.displayImage(URI_DEFAULT, viewHolder.mcircleImageViewHead, options);
+                    }else {
+                        loader.displayImage(user.getUserHead().getUrl(), viewHolder.mcircleImageViewHead, options);
+                    }
+                    //设置性别图标
+                    if ("男".equals(user.getSex())) {
+                        viewHolder.mImageViewSex.setImageResource(R.drawable.boy);
+                    } else {
+                        viewHolder.mImageViewSex.setImageResource(R.drawable.gril);
+                    }
+                    //设置昵称
+                    viewHolder.mTextViewNickName.setText(user.getNickName());
+                }else {
+                    //显示失败
                 }
-                //设置昵称
-                viewHolder.mTextViewNickName.setText(user.getNickName());
             }
         });
         //------------
