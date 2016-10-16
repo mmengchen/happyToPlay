@@ -15,6 +15,7 @@ import com.xiaoguang.happytoplay.R;
 import com.xiaoguang.happytoplay.application.MyApplitation;
 import com.xiaoguang.happytoplay.bean.Grather;
 import com.xiaoguang.happytoplay.bean.User;
+import com.xiaoguang.happytoplay.contract.IContracts;
 import com.xiaoguang.happytoplay.model.UserModelImpl;
 import com.xiaoguang.happytoplay.utils.DistanceUtils;
 import com.xiaoguang.happytoplay.utils.ImageLoaderutils;
@@ -43,9 +44,6 @@ public class XListVewAdapter extends BaseAdapter {
     private final DisplayImageOptions options;
     //获取图片加载器对象
     private final ImageLoader loader;
-    //头像默认的Url
-    private String URI_DEFAULT = "http://bmob-cdn-6590.b0.upaiyun.com/2016/10/16/f8bd4e9c40174c49805921fbe68b6745.png";
-
     public XListVewAdapter(Context context, List<Grather> grathers) {
         this.context = context;
         this.grathers = grathers;
@@ -103,7 +101,7 @@ public class XListVewAdapter extends BaseAdapter {
                 if(e==null){
                     //设置头像信息
                     if (user.getUserHead().getUrl()==null){//如果用户没有头像，则显示默认头像
-                        loader.displayImage(URI_DEFAULT, viewHolder.mcircleImageViewHead, options);
+                        loader.displayImage(IContracts.DEFAULT_HEADE_URI, viewHolder.mcircleImageViewHead, options);
                     }else {
                         loader.displayImage(user.getUserHead().getUrl(), viewHolder.mcircleImageViewHead, options);
                     }

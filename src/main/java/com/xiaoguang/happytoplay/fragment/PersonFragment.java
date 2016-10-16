@@ -95,7 +95,6 @@ public class PersonFragment extends BaseFragment implements IFragPersonContract.
     protected View initLayout(LayoutInflater inflater) {
         View view = inflater.inflate(R.layout.frag_person, null);
         ButterKnife.bind(this, view);
-        //加载数据（不是很合理，会造成卡顿现象）
         setData();
         //加载gridview 的项
         presenter.loadingData(mFragPersonGv);
@@ -143,6 +142,7 @@ public class PersonFragment extends BaseFragment implements IFragPersonContract.
         //用于进行支付功能测试
         switch (type) {
             case 4:
+                //暂时进行支付测试
                 startActivity(new Intent(getContext(), PayActivity.class));
                 break;
             case 5:

@@ -36,4 +36,6 @@
         completions."
     </string>
 
+    <string name="payStr">注：收款方为第三方支付服务商，(付款成功后，将由开发商对其进行管理)。如有问题，请联系（客服：18600434760）></string>
+
 </resources>

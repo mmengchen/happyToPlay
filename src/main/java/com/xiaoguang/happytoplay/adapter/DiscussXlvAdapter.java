@@ -14,6 +14,7 @@ import com.xiaoguang.happytoplay.R;
 import com.xiaoguang.happytoplay.application.MyApplitation;
 import com.xiaoguang.happytoplay.bean.Discuss;
 import com.xiaoguang.happytoplay.bean.User;
+import com.xiaoguang.happytoplay.contract.IContracts;
 import com.xiaoguang.happytoplay.contract.IGratherDetailsContract;
 import com.xiaoguang.happytoplay.model.UserModelImpl;
 import com.xiaoguang.happytoplay.utils.ImageLoaderutils;
@@ -38,8 +39,6 @@ public class DiscussXlvAdapter extends BaseAdapter {
     private final DisplayImageOptions options;
     //获取图片加载器对象
     private final ImageLoader loader;
-    //头像默认的Url
-    private String URI_DEFAULT = "http://bmob-cdn-6590.b0.upaiyun.com/2016/10/16/f8bd4e9c40174c49805921fbe68b6745.png";
     public DiscussXlvAdapter(List<Discuss> discussList, Context context,
                              IGratherDetailsContract.IGratherDetailsPresenter presenter) {
         this.discussList = discussList;
@@ -93,7 +92,7 @@ public class DiscussXlvAdapter extends BaseAdapter {
             public void onDone(User user, BmobException e) {
                 if (e == null) {
                     if (user.getUserHead().getUrl()==null){//头像为空,则显示默认头像
-                        loader.displayImage(URI_DEFAULT, finalViewHolder.circleImageViewHead, options);
+                        loader.displayImage(IContracts.DEFAULT_HEADE_URI, finalViewHolder.circleImageViewHead, options);
                     }else {
                         //查询成功,设置头像//使用ImageLoader
                         loader.displayImage(user.getUserHead().getUrl(), finalViewHolder.circleImageViewHead, options);

@@ -1,14 +1,18 @@
 package com.xiaoguang.happytoplay.presenter;
 
+import android.graphics.Color;
 import android.widget.GridView;
 
 import com.xiaoguang.happytoplay.adapter.DiscussXlvAdapter;
 import com.xiaoguang.happytoplay.adapter.GratherDetailsGridViewAdapter;
 import com.xiaoguang.happytoplay.application.MyApplitation;
 import com.xiaoguang.happytoplay.bean.Discuss;
+import com.xiaoguang.happytoplay.bean.Grather;
+import com.xiaoguang.happytoplay.bean.User;
 import com.xiaoguang.happytoplay.contract.IGratherDetailsContract;
 import com.xiaoguang.happytoplay.model.DiscussModel;
 import com.xiaoguang.happytoplay.utils.LogUtils;
+import com.xiaoguang.happytoplay.utils.ToastUtils;
 import com.xiaoguang.happytoplay.view.XListView;
 
 import java.text.SimpleDateFormat;
@@ -18,6 +22,7 @@ import java.util.List;
 
 import cn.bmob.v3.datatype.BmobFile;
 import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.UpdateListener;
 
 /**
  * 活动详情处理的Presenter类
@@ -177,6 +182,63 @@ public class GratherDetailsPresenterImpl implements IGratherDetailsContract.IGra
         view.showMsg("查询用户信息成功");
         LogUtils.i("查询用户信息成功");
 
+    }
+
+    @Override
+    public void joinGrather(final Grather grather, User currenUser, final String orderId) {
+        Holder holder = new Holder();
+        //用于标记当前用户是否参加过该活动
+        holder.flag = grather.getJoinUsesId().contains(currenUser.getObjectId());
+        if (holder.flag) {//参加过
+            //一个活动一个人只允许参加一次
+            //改变按钮颜色
+            view.showMsg("你已参加过了");
+            return;
+        }
+        LogUtils.i("我正在进行参加活动 ");
+        //将当前用户Id保存
+        grather.add("joinUsesId", currenUser.getObjectId());
+        //更新数据到服务器
+        grather.update(grather.getObjectId(), new UpdateListener() {
+            @Override
+            public void done(BmobException e) {
+                if (e == null) {
+                    LogUtils.i("当前活动添加用户成功");
+                    //向user表添加活动
+                    User user = new User();
+                    //将当前的活动的Id添加到用户表中
+                    user.add("joinGratherIds",grather.getObjectId());
+                    //将付款编号保存到数据中
+                    user.add("orderIds",orderId);
+                    user.update(MyApplitation.user.getObjectId(), new UpdateListener() {
+                        @Override
+                        public void done(BmobException e) {
+                            if (e == null) {
+                                LogUtils.i("当前用户添加当前活动成功");
+                                ToastUtils.toastShort("参加成功");
+                                //改变按钮颜色
+                                view.setViewState("已经参加", Color.parseColor("#C4C3C3"),true);
+                            } else {
+                                LogUtils.i("当前用户添加当前活动失败" + e.toString());
+                                ToastUtils.toastShort("参加活动失败");
+                                //删除第一个表中的数据，保证数据的统一性
+                            }
+                        }
+                    });
+                } else {
+                    LogUtils.i("当前活动添加当前用户失败，原因 " + e.toString());
+                    ToastUtils.toastShort("参加失败，原因是" + e.toString());
+                }
+            }
+        });
+        holder.flag = !holder.flag;
+    }
+
+    class Holder {
+        /**
+         * 用于标记是否参加过活动
+         */
+        boolean flag = false;
     }
 
     @Override

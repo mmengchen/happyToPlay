@@ -135,13 +135,6 @@ public class MapActivity extends BaseActivity implements IMapContract.IMapView {
         @Override
         public void onGetPoiResult(PoiResult result) {
             pois = result.getAllPoi();
-//			for (PoiInfo poiInfo : pois) {
-//				if (poiInfo != null) {
-//					Log.i("myTag", poiInfo.name);
-//				}
-//
-//			}
-
             //将用户搜索到的结果显示到地图上(检索结果覆盖物 )
             // 检索结果覆盖物 第二步，在POI检索回调接口中添加自定义的PoiOverlay；
             if (result != null) {

@@ -35,12 +35,8 @@ public class Grather extends BmobObject {
     private String address;
     //收藏活动的人
     private List<String> loveUserIds;
-//    //评论的id
-//    private List<String> discussIds;
-//
-//    public Grather() {
-//    }
-
+    //参加活动的人
+    private List<String> joinUsesId;
     public String getGratherName() {
         return gratherName;
     }
@@ -131,19 +127,20 @@ public class Grather extends BmobObject {
         return loveUserIds;
     }
 
-/*
-    public List<String> getDiscussIds() {
-        return discussIds;
-    }
-*/
-
     public void setLoveUserIds(List<String> loveUserIds) {
         this.loveUserIds = loveUserIds;
     }
 
-/*    public void setDiscussIds(List<String> discussIds) {
-        this.discussIds = discussIds;
-    }*/
+    public List<String> getJoinUsesId() {
+        if (joinUsesId==null){
+            joinUsesId = new ArrayList<>();
+        }
+        return joinUsesId;
+    }
+
+    public void setJoinUsesId(List<String> joinUsesId) {
+        this.joinUsesId = joinUsesId;
+    }
 
     @Override
     public String toString() {
@@ -159,7 +156,6 @@ public class Grather extends BmobObject {
                 ", flag=" + flag +
                 ", address='" + address + '\'' +
                 ", loveUserIds=" + loveUserIds +
-//                ", discussIds=" + discussIds +
                 '}';
     }
 }

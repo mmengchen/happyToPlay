@@ -1,6 +1,8 @@
 package com.xiaoguang.happytoplay.activity;
 
 import android.app.AlertDialog;
+import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -16,6 +18,7 @@ import com.xiaoguang.happytoplay.R;
 import com.xiaoguang.happytoplay.application.MyApplitation;
 import com.xiaoguang.happytoplay.base.BaseActivity;
 import com.xiaoguang.happytoplay.bean.Grather;
+import com.xiaoguang.happytoplay.contract.IContracts;
 import com.xiaoguang.happytoplay.contract.IGratherDetailsContract;
 import com.xiaoguang.happytoplay.presenter.GratherDetailsPresenterImpl;
 import com.xiaoguang.happytoplay.utils.LogUtils;
@@ -65,6 +68,8 @@ public class GratherDetailsActivity extends BaseActivity implements IGratherDeta
     private AlertDialog.Builder builder;
     private AlertDialog alertDialog;
     private Grather grather;
+    //订单编号
+    private String orderId;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -73,6 +78,21 @@ public class GratherDetailsActivity extends BaseActivity implements IGratherDeta
         ButterKnife.bind(this);
         new GratherDetailsPresenterImpl(this);
         initData();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode== IContracts.RESULT_SUCCESS){//支付成功
+            //获取订单号
+            String orderId = data.getStringExtra("orderId");
+            LogUtils.i("获取的订单号为"+orderId);
+            presenter.joinGrather(grather,MyApplitation.user,orderId);
+        }else {
+            showMsg("您暂时无法参加活动");
+            finish();
+        }
+
     }
 
     /**
@@ -88,6 +108,13 @@ public class GratherDetailsActivity extends BaseActivity implements IGratherDeta
         mActGratherDetialsTvMoney.setText(grather.getGratherMoney() + "");
         mActGratherDetialsTvTime.setText(grather.getGraterDataTime());
         mActGratherDetialsTvType.setText(grather.getGratherType());
+        //设置按钮状态
+        boolean flag = grather.getJoinUsesId().contains(MyApplitation.user.getObjectId());
+        if (flag){
+            //设置为灰色
+            setViewState("已经参加过", Color.parseColor("#C4C3C3"),true);
+        }
+
         //获取图片
         List<BmobFile> imgFiles = grather.getGratherImageFiles();
         //显示图片
@@ -141,6 +168,18 @@ public class GratherDetailsActivity extends BaseActivity implements IGratherDeta
 
     }
 
+    @Override
+    public void setViewState(String str, int i,boolean state) {
+        if(state){//参加过活动
+            //设置按钮的内容
+            mActGratherDetialsBtnJoin.setText(str);
+            //设置按钮的背景颜色
+            mActGratherDetialsBtnJoin.setBackgroundColor(i);
+            //设置按钮不可点击
+            mActGratherDetialsBtnJoin.setClickable(!state);
+        }
+    }
+
     @OnClick({R.id.frag_message_ib_back, R.id.frag_person_ib_menu, R.id.act_grather_detials_btn_join, R.id.act_grather_detials_iv_pl})
     public void onClick(View view) {
         switch (view.getId()) {
@@ -150,6 +189,15 @@ public class GratherDetailsActivity extends BaseActivity implements IGratherDeta
             case R.id.frag_person_ib_menu://菜单
                 break;
             case R.id.act_grather_detials_btn_join://参加活动
+                if (grather.getGratherMoney()>0){//付费活动
+                    Intent intent = new Intent(this,PayActivity.class);
+                    //将活动名称和付款金额
+                    intent.putExtra("graterTile",grather.getGratherName());
+                    intent.putExtra("money",grather.getGratherMoney());
+                    startActivityForResult(intent,500);
+                }else {//免费活动，直接进行处理
+                    presenter.joinGrather(grather,MyApplitation.user,"free");
+                }
                 break;
             case R.id.act_grather_detials_iv_pl://评论
                 builder = super.showAlertDialog(null, null, true);

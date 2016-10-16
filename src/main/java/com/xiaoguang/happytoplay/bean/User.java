@@ -49,6 +49,11 @@ public class User extends BmobUser {
      */
     private List<String> joinGratherIds;
 
+    /**
+     * 参加活动的付款的订单号的集合
+     */
+    private List<String> orderIds;
+
 
     public String getNickName() {
         return nickName;
@@ -114,6 +119,14 @@ public class User extends BmobUser {
 
     public double getMoney() {
         return money;
+    }
+
+    public List<String> getOrderIds() {
+        return orderIds;
+    }
+
+    public void setOrderIds(List<String> orderIds) {
+        this.orderIds = orderIds;
     }
 
     public void setMoney(double money) {

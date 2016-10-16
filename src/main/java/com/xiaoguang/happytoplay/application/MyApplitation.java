@@ -18,6 +18,8 @@ import c.b.BP;
 import cn.bmob.sms.BmobSMS;
 import cn.bmob.v3.Bmob;
 
+import static com.xiaoguang.happytoplay.contract.IContracts.BMOB_SDK_APP_KEY;
+
 /**
  * Created by 11655 on 2016/9/26.
  */
@@ -54,12 +56,12 @@ public class MyApplitation extends Application {
     public void onCreate() {
         super.onCreate();
         context = getApplicationContext();
-        //初始化BMob短信服务SDK
-        BmobSMS.initialize(context, "89138a540444011eb66341febb70e16a");
-        //初始化BMobSDK
-        Bmob.initialize(this, "89138a540444011eb66341febb70e16a");
-        //初始化支付
-        BP.init(context, "89138a540444011eb66341febb70e16a");
+        //初始化BMob 短信服务SDK
+        BmobSMS.initialize(context,BMOB_SDK_APP_KEY);
+        //初始化BMob 数据SDK
+        Bmob.initialize(this,BMOB_SDK_APP_KEY);
+        //初始化Bmob 支付SDK
+        BP.init(context,BMOB_SDK_APP_KEY);
         //初始化百度地图SDK
         SDKInitializer.initialize(getApplicationContext());
         mLocationClient = new LocationClient(getApplicationContext());     //声明LocationClient类

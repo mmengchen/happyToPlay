@@ -78,18 +78,17 @@ public class RegPresenterImpl implements IRegContract.IRegPresenter {
 
     @Override
     public void getCode(String phoneNumber) {
-        LogUtils.i("myTag", "获取验证码！！！");
+        LogUtils.i("myTag", "获取验证码！！！手机号码"+phoneNumber);
         //向服务器发送请求短信验证码
         BmobSMS.requestSMSCode(context, phoneNumber, "注册模板", new RequestSMSCodeListener() {
             @Override
             public void done(Integer smsId, BmobException ex) {
-                // TODO Auto-generated method stub
                 if (ex == null) {//验证码发送成功
                     LogUtils.i("myTag", "验证码发送成功+短信id：" + smsId);//用于查询本次短信发送详情
                     view.showMsg("验证码发送成功");
                 } else {
                     LogUtils.i("myTag", "验证码发送失败" + ex.toString());
-                    view.showMsg("验证码发送成功");
+                    view.showMsg("验证码发送失败");
                 }
             }
         });

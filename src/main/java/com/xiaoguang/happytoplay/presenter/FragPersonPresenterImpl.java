@@ -12,6 +12,7 @@ import android.widget.GridView;
 
 import com.xiaoguang.happytoplay.adapter.FragPersonGridViewAdapter;
 import com.xiaoguang.happytoplay.bean.User;
+import com.xiaoguang.happytoplay.contract.IContracts;
 import com.xiaoguang.happytoplay.contract.IFragPersonContract;
 import com.xiaoguang.happytoplay.model.IcoModel;
 import com.xiaoguang.happytoplay.utils.LogUtils;
@@ -39,8 +40,6 @@ public class FragPersonPresenterImpl implements IFragPersonContract.IFragPersonP
     //定一个数据源
     private List<String> datas;
     private IcoModel icoModel;
-    //头像默认的Url
-    private String URI_DEFAULT = "http://bmob-cdn-6590.b0.upaiyun.com/2016/10/16/f8bd4e9c40174c49805921fbe68b6745.png";
 
     //提供一个构造器
     public FragPersonPresenterImpl(IFragPersonContract.IFragPersonView view) {
@@ -161,7 +160,7 @@ public class FragPersonPresenterImpl implements IFragPersonContract.IFragPersonP
                         view.showMsg("更新信息失败" + e.toString());
                         view.hiddenLoading();
                         //显示默认头像,将文件删除
-                        view.displayImage(URI_DEFAULT);
+                        view.displayImage(IContracts.DEFAULT_HEADE_URI);
                         BmobFile file = new BmobFile();
                         file.setUrl(uri);//此url是上传文件成功之后通过bmobFile.getUrl()方法获取的。
                         file.delete(new UpdateListener() {
@@ -221,7 +220,7 @@ public class FragPersonPresenterImpl implements IFragPersonContract.IFragPersonP
                     //获取文件的url
                     String uri = "";
                     if (user.getUserHead().getUrl()==null){//如果不存在头像，则显示默认头像
-                        uri = URI_DEFAULT;
+                        uri = IContracts.DEFAULT_HEADE_URI;
                     }else {
                         uri = user.getUserHead().getUrl();
                     }
@@ -232,10 +231,10 @@ public class FragPersonPresenterImpl implements IFragPersonContract.IFragPersonP
                 } else {//查询失败
                     view.showMsg("刷新数据失败！" + e.toString());
                     LogUtils.i("刷新数据失败" + e.toString());
-                    view.displayImage(URI_DEFAULT);
-                    view.hiddenLoading();
                     //显示默认头像
-                    view.displayImage(URI_DEFAULT);
+                    view.displayImage(IContracts.DEFAULT_HEADE_URI);
+                    view.hiddenLoading();
+
                 }
             }
         });
