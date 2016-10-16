@@ -8,6 +8,8 @@ import cn.bmob.v3.BmobObject;
  */
 
 public class Discuss extends BmobObject {
+    //活动的id
+    private String gratehrId;
     //评论内容
     private String discussText;
     //评论的人
@@ -33,8 +35,15 @@ public class Discuss extends BmobObject {
     public String getDiscussTime() {
         return discussTime;
     }
-
     public void setDiscussTime(String discussTime) {
         this.discussTime = discussTime;
+    }
+
+    public String getGratehrId() {
+        return gratehrId;
+    }
+
+    public void setGratehrId(String gratehrId) {
+        this.gratehrId = gratehrId;
     }
 }

@@ -218,10 +218,13 @@ public class FragPersonPresenterImpl implements IFragPersonContract.IFragPersonP
                     //隐藏
                     view.hiddenLoading();
                     view.showMsg("刷新数据成功！");
-                    //暂时只更新头像操作，不更新其他数据//暂未判断是否为空
-                    BmobFile file = user.getUserHead();
                     //获取文件的url
-                    String uri = file.getFileUrl();
+                    String uri = "";
+                    if (user.getUserHead().getUrl()==null){//如果不存在头像，则显示默认头像
+                        uri = URI_DEFAULT;
+                    }else {
+                        uri = user.getUserHead().getUrl();
+                    }
                     //展示图片
                     LogUtils.i("文件的url为" + uri);
                     view.displayImage(uri);

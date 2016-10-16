@@ -73,10 +73,10 @@ public interface IGratherDetailsContract {
 
         /**
          * 获取评论信息，并显示到控件上
-         * @param discussIds  活动的评论集合
+         * @param objectId  当前活动的评论id
          * @param mActGratherDetialsXlv  要显示的控件
          */
-        void showDisscuss(List<String> discussIds, XListView mActGratherDetialsXlv);
+        void showDiscuss(String objectId, XListView mActGratherDetialsXlv);
 
         /**
          * 发送评论

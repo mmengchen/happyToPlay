@@ -93,7 +93,7 @@ public class GratherDetailsActivity extends BaseActivity implements IGratherDeta
         //显示图片
         presenter.setImages(imgFiles, mActGratherDetialsGv);
         //获取评论,需要查询，然后显示
-        presenter.showDisscuss(grather.getDiscussIds(), mActGratherDetialsXlv);
+        presenter.showDiscuss(grather.getObjectId(),mActGratherDetialsXlv);
     }
 
     @Override
