@@ -19,6 +19,8 @@
         android:layout_marginLeft="5dp"
         android:layout_marginTop="15dp"
         android:layout_toRightOf="@id/act_detials_xlv_item_civ_head"
+        android:textColor="#000000"
+
         android:text="Lia" />
 
     <ImageView
@@ -39,6 +41,7 @@
         android:layout_toEndOf="@+id/act_detials_xlv_item_civ_head"
         android:maxHeight="20dp"
         android:maxLength="150"
+        android:textColor="#000000"
         android:text="发布的评论"
         android:textSize="13sp" />
 
@@ -47,10 +50,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/act_detials_xlv_item_civ_head"
-        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
         android:layout_marginEnd="49dp"
         android:maxHeight="20dp"
         android:maxLength="150"
+        android:textColor="#000000"
         android:text="时间"
         android:textSize="12sp" />
 

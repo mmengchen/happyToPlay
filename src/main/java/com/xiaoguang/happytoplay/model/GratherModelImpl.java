@@ -21,6 +21,10 @@ import cn.bmob.v3.listener.UploadBatchListener;
 
 public class GratherModelImpl {
     /**
+     * 数据源，用于个人中中心更多界面的数据
+     */
+    private List<String> datas = new ArrayList<>();
+    /**
      * 文件批量上传
      *
      * @param filePaths      文件的路径的数组
@@ -62,17 +66,29 @@ public class GratherModelImpl {
     }
 
     /**
+     * 查询收藏的活动
+     *　@param datas  S数据源
+     * @param queryCallBack 回调接口
+     *
+     */
+    public void queryGrather(List datas,final QueryCallBack<Grather> queryCallBack) {
+        //初始化数据源
+        this.datas = datas;
+        //调用查询800
+        queryGrather(800,null,0,0,null,queryCallBack);
+    }
+    /**
      * 查询活动的
      *
      * @param queryType     查询类型，值为 100时，为默认查询10条数据；值为200时 ，值为300，值为400时 为类型查询<br/>
-     *                      </> 500:距离查询  600:点赞数查询
+     *                      </> 500:距离查询  600:点赞数查询  700:为免费活动查询
      * @param dataType
      * @param skip
      * @param counts
      * @param queryCallBack 查询的回调方法
      * @param bmobGeoPoint 距离查询，配合500使用
      */
-    public void queryGrather(final int queryType, String dataType, int skip, int counts, BmobGeoPoint bmobGeoPoint, final QueryCallBack<Grather> queryCallBack) {
+    public void queryGrather(final int queryType, String dataType, int skip, int counts,BmobGeoPoint bmobGeoPoint, final QueryCallBack<Grather> queryCallBack) {
         final BmobQuery<Grather> query = new BmobQuery<>();
         switch (queryType) {
             case 100:
@@ -101,15 +117,22 @@ public class GratherModelImpl {
             case 700://查询免费活动
                 query.addWhereEqualTo("gratherMoney",0);
                 break;
+            case 800://查询收藏
+                query.addWhereContainedIn("objectId",datas);
+                break;
+            case 900://发起活动查询
+                query.addWhereEqualTo("gratherOriginator",dataType);
+                break;
             default:return;
         }
+        //查询数据
         query.findObjects(new FindListener<Grather>() {
             @Override
             public void done(List<Grather> list, BmobException e) {
                 if (queryType == 600){//点赞查询默认显示几条数据
                     List<Grather> lists = new ArrayList<Grather>();
                     for (Grather grather:
-                         list) {
+                            list) {
                         if (grather.getLoveUserIds().size()>5){//点赞数大于5则显示数据
                             lists.add(grather);
                         }

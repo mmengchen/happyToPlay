@@ -5,9 +5,9 @@
     android:gravity="center"
     android:orientation="vertical">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="好友"
-        android:textSize="18sp" />
+    <!--好友-->
+    <com.xiaoguang.happytoplay.view.XListView
+        android:id="@+id/frag_friend_xlv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 </LinearLayout>

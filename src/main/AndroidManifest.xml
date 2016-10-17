@@ -29,6 +29,14 @@
     <uses-permission android:name="android.permission.READ_CONTACTS" />
 
     <!-- 推送所需的权限 -->
+    <!-- 添加自定义的权限-->
+    <permission
+        android:name="cn.bmob.permission.push"
+        android:protectionLevel="normal"></permission>
+
+    <uses-permission android:name="cn.bmob.permission.push" />
+    <uses-permission android:name="android.permission.READ_LOGS" />
+    <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
@@ -53,16 +61,60 @@
         <activity android:name=".activity.PublishActivity" />
         <activity android:name=".activity.MapActivity" />
         <activity android:name=".activity.PersonDetailsActivity" />
-        <activity android:name=".activity.PayActivity"></activity>
-        <activity android:name=".activity.GratherDetailsActivity"/>
-        <activity android:name=".activity.PublishTipActivity"/>
-        <activity android:name=".activity.ShowResultActivity"/>
+        <activity android:name=".activity.PayActivity" />
+        <activity android:name=".activity.GratherDetailsActivity" />
+        <activity android:name=".activity.PublishTipActivity" />
+        <activity android:name=".activity.ShowResultActivity" />
+        <activity android:name=".activity.PersonShowResult" />
         <!-- BaiduMap start -->
         <service
             android:name="com.baidu.location.f"
             android:enabled="true"
             android:process=":remote"></service>
-        <!-- BaiduMap end -->
+        <service
+            android:label="PushService"
+            android:name="cn.bmob.push.lib.service.PushService"
+            android:process=":bmobpush"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="cn.bmob.push.lib.service.PushService"/>
+            </intent-filter>
+        </service>
+        <!-- 用于进程保活 -->
+        <service
+            android:name="cn.bmob.push.lib.service.PushNotifyService"
+            android:process=":bmobpush" >
+        </service>
+
+        <receiver android:name="cn.bmob.push.PushReceiver">
+            <intent-filter android:priority="2147483647"><!--优先级加最高-->
+                <!-- 系统启动完成后会调用 -->
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <!-- 解锁完成后会调用 -->
+                <action android:name="android.intent.action.USER_PRESENT" />
+                <!-- 监听网络连通性 -->
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+        </receiver>
+
+        <!--注册自己的广播接收者-->
+        <receiver android:name="com.xiaoguang.happytoplay.receiver.PushMessageReceiver">
+            <intent-filter>
+                <action android:name="cn.bmob.push.action.MESSAGE" />
+            </intent-filter>
+        </receiver>
+        <!-- 接收心跳和唤醒的广播，要和PushService运行在同个进程 -->
+        <receiver
+            android:name="cn.bmob.push.PushNotifyReceiver"
+            android:process=":bmobpush" >
+            <intent-filter>
+                <!-- 接收心跳广播的action -->
+                <action android:name="cn.bmob.push.action.HEARTBEAT" />
+                <!-- 接收唤醒广播的action -->
+                <action android:name="cn.bmob.push.action.NOTIFY" />
+            </intent-filter>
+        </receiver>
+        <!-- BmobPush end -->
         <!-- 百度地图SDK的API_KEY -->
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"

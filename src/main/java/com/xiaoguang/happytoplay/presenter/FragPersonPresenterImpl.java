@@ -11,9 +11,12 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 
 import com.xiaoguang.happytoplay.adapter.FragPersonGridViewAdapter;
+import com.xiaoguang.happytoplay.application.MyApplitation;
+import com.xiaoguang.happytoplay.bean.Grather;
 import com.xiaoguang.happytoplay.bean.User;
 import com.xiaoguang.happytoplay.contract.IContracts;
 import com.xiaoguang.happytoplay.contract.IFragPersonContract;
+import com.xiaoguang.happytoplay.model.GratherModelImpl;
 import com.xiaoguang.happytoplay.model.IcoModel;
 import com.xiaoguang.happytoplay.utils.LogUtils;
 
@@ -29,7 +32,7 @@ import cn.bmob.v3.listener.QueryListener;
 import cn.bmob.v3.listener.UpdateListener;
 
 /**
- * 个人中心操作相关
+ * 个人中心操作相关操作类
  * Created by 11655 on 2016/9/28.
  */
 
@@ -64,23 +67,23 @@ public class FragPersonPresenterImpl implements IFragPersonContract.IFragPersonP
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 switch (position) {
-                    case 0:
-                        FragPersonPresenterImpl.this.view.jumpActivity(0);
+                    case 0://优惠查询
+                        query(1);
                         break;
-                    case 1:
-                        FragPersonPresenterImpl.this.view.jumpActivity(1);
+                    case 1://收藏查询
+                        query(1);
                         break;
-                    case 2:
-                        FragPersonPresenterImpl.this.view.jumpActivity(2);
+                    case 2://发起活动查询
+                        query(2);
                         break;
-                    case 3:
-                        FragPersonPresenterImpl.this.view.jumpActivity(3);
+                    case 3://订单查询
+                        query(3);
                         break;
-                    case 4://暂时跳转支付界面，用于进行支付测试
-                        FragPersonPresenterImpl.this.view.jumpActivity(4);
+                    case 4://参加活动查询
+                        query(4);
                         break;
                     case 5://跳转到个人信息设置
-                        FragPersonPresenterImpl.this.view.jumpActivity(5);
+                        FragPersonPresenterImpl.this.view.jumpActivity();
                         break;
                 }
             }
@@ -167,10 +170,10 @@ public class FragPersonPresenterImpl implements IFragPersonContract.IFragPersonP
 
                             @Override
                             public void done(BmobException e) {
-                                if(e==null){
+                                if (e == null) {
                                     LogUtils.i("文件删除成功");
-                                }else{
-                                    LogUtils.i("文件删除失败"+e.toString());
+                                } else {
+                                    LogUtils.i("文件删除失败" + e.toString());
                                 }
                             }
                         });
@@ -198,7 +201,7 @@ public class FragPersonPresenterImpl implements IFragPersonContract.IFragPersonP
         //获取当前在线的用户信息
         User currentUser = BmobUser.getCurrentUser(User.class);
         //判断当前头像是否为空
-        if (currentUser.getUserHead().getUrl()!= null) {
+        if (currentUser.getUserHead().getUrl() != null) {
             //获取当前头像的uri
             String uri = currentUser.getUserHead().getFileUrl();
             //展示图片
@@ -219,9 +222,9 @@ public class FragPersonPresenterImpl implements IFragPersonContract.IFragPersonP
                     view.showMsg("刷新数据成功！");
                     //获取文件的url
                     String uri = "";
-                    if (user.getUserHead().getUrl()==null){//如果不存在头像，则显示默认头像
+                    if (user.getUserHead().getUrl() == null) {//如果不存在头像，则显示默认头像
                         uri = IContracts.DEFAULT_HEADE_URI;
-                    }else {
+                    } else {
                         uri = user.getUserHead().getUrl();
                     }
                     //展示图片
@@ -238,6 +241,56 @@ public class FragPersonPresenterImpl implements IFragPersonContract.IFragPersonP
                 }
             }
         });
+    }
+
+    @Override
+    public void query(int type) {
+        GratherModelImpl gratherModel = new GratherModelImpl();
+        switch (type) {
+            case 0://优惠查询
+                break;
+            case 1://收藏查询(测试数据成功)
+                //根据用户保存的收藏的活动，查询活动标题
+                //查询多条
+                gratherModel.queryGrather(MyApplitation.user.getLoveGratherIds(), new GratherModelImpl.QueryCallBack<Grather>() {
+                    @Override
+                    public void done(List<Grather> result, BmobException e) {
+                        if (e == null) {//查询成功
+                            LogUtils.i("我查询到，我收藏的活动为" + result.toString());
+                            //跳转到显示界面
+                            view.jumpActivity(result,0);
+                        } else {//查询失败
+                            LogUtils.i("查询失败" + e.toString());
+                            view.showMsg("查询失败");
+                        }
+                    }
+                });
+                break;
+            case 2://发起活动查询(测试数据成功)
+                //根据用户id，查询发起表的数据
+                gratherModel.queryGrather(900, MyApplitation.user.getObjectId(), 0, 10, null, new GratherModelImpl.QueryCallBack<Grather>() {
+                    @Override
+                    public void done(List<Grather> result, BmobException e) {
+                        if (e == null) {//查询成功
+                            LogUtils.i("我查询到，我发起的活动为" + result.toString());
+                            //跳转到显示界面
+                            view.jumpActivity(result,0);
+                        } else {//查询失败
+                            LogUtils.i("查询失败" + e.toString());
+                            //给出错误提示
+                            view.showMsg("查询失败");
+                        }
+                    }
+                });
+                break;
+            case 3://订单查询
+                //免费和付费
+                view.jumpActivity(null,3);
+                break;
+            case 4://参加活动查询,应该是收藏活动一样，需要修改
+                view.jumpActivity(null,4);
+                break;
+        }
     }
 
     @Override

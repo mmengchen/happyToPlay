@@ -199,7 +199,7 @@ public class GratherDetailsActivity extends BaseActivity implements IGratherDeta
                     presenter.joinGrather(grather,MyApplitation.user,"free");
                 }
                 break;
-            case R.id.act_grather_detials_iv_pl://评论
+            case R.id.act_grather_detials_iv_pl://发布评论
                 builder = super.showAlertDialog(null, null, true);
                 View v = LayoutInflater.from(this).inflate(R.layout.write_dicuss, null);
                 builder.setView(v);

@@ -45,6 +45,10 @@ dependencies {
     compile 'cn.bmob.android:bmob-sms:1.0.1'
     //如果你想应用能够兼容Android6.0，请添加此依赖(org.apache.http.legacy.jar)
     compile 'cn.bmob.android:http-legacy:1.0'
+    //bmob-im：Bmob的即时通讯包，注意每个版本的im依赖特定版本的bmob-sdk
+    compile 'cn.bmob.android:bmob-im:2.0.5@aar'
+    compile 'cn.bmob.android:bmob-sdk:3.4.7-aar'
+    //
     compile files('libs/universal-image-loader-1.9.2.jar')
     //circular-progress-button 按钮的引用
     compile 'com.github.dmytrodanylyk.circular-progress-button:library:1.1.3'

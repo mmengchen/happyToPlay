@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -13,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.xiaoguang.happytoplay.R;
+import com.xiaoguang.happytoplay.base.BaseActivity;
 import com.xiaoguang.happytoplay.contract.IContracts;
 import com.xiaoguang.happytoplay.utils.LogUtils;
 import com.xiaoguang.happytoplay.utils.ToastUtils;
@@ -31,7 +31,7 @@ import c.b.PListener;
  * 支付功能的Activity，暂时用于支付测试,存在没有自动安装支付插件的功能
  * 微信支付测试成功，支付宝，由于官方问题导致付款失败
  */
-public class PayActivity extends AppCompatActivity {
+public class PayActivity extends BaseActivity{
 
     //通过绑定方式获取控件
     @BindView(R.id.act_pay_ib_back)

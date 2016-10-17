@@ -56,7 +56,7 @@ public class GratherDetailsPresenterImpl implements IGratherDetailsContract.IGra
     }
 
     @Override
-    public void showDiscuss(final String objectId, final XListView mActGratherDetialsXlv) {
+    public void showDiscuss(String objectId, final XListView mActGratherDetialsXlv) {
         view.showLoading(null, "数据加载中", false);
         //根据当前活动id 查询评论表中的数据
         discussModel.queryDisscuss(objectId, 200, new DiscussModel.QueryCallBack() {
@@ -79,9 +79,9 @@ public class GratherDetailsPresenterImpl implements IGratherDetailsContract.IGra
             }
         });
         //评论的刷新功能
-        //为XlistView添加上拉刷新和下拉加载
-        mActGratherDetialsXlv.setPullLoadEnable(true);
-        mActGratherDetialsXlv.setPullLoadEnable(true);
+        //为XlistView添加上拉刷新和下拉加载(暂时禁用，刷新可能导致程序崩溃)
+      /*  mActGratherDetialsXlv.setPullLoadEnable(false);
+        mActGratherDetialsXlv.setPullLoadEnable(false);
         //用于存放数据
         mActGratherDetialsXlv.setXListViewListener(new XListView.IXListViewListener() {
 
@@ -136,7 +136,7 @@ public class GratherDetailsPresenterImpl implements IGratherDetailsContract.IGra
                     }
                 });
             }
-        });
+        });*/
     }
 
     @Override

@@ -10,7 +10,10 @@ public interface IContracts {
      * 默认头像的地址
      */
     String DEFAULT_HEADE_URI = "http://bmob-cdn-6590.b0.upaiyun.com/2016/10/16/22901ee0406f7af280b56a1b5d555f58.png";
-
+    /**
+     * 默认城市信息地址
+     */
+    String CITYS_URL ="http://bmob-cdn-6590.b0.upaiyun.com/2016/10/17/d99fff2a407a272480feabe07227945e.html";
     /**
      * Bmob 云的application key
      */

@@ -10,6 +10,7 @@ import android.view.View;
 import com.xiaoguang.happytoplay.application.MyApplitation;
 import com.xiaoguang.happytoplay.bean.Grather;
 import com.xiaoguang.happytoplay.bean.User;
+import com.xiaoguang.happytoplay.contract.IContracts;
 import com.xiaoguang.happytoplay.contract.IWelContract;
 import com.xiaoguang.happytoplay.model.GratherModelImpl;
 import com.xiaoguang.happytoplay.utils.LogUtils;
@@ -94,8 +95,6 @@ public class WelPresenterImpl implements IWelContract.IWelPresenter {
         if (netState) {
             //网络连接正常
             view.showMsg("网络连接正常");
-            //从服务器获取活动数据
-//            getGrathersFromServer();
             //判断是否是第一次登陆
             isLoginEd();
             LogUtils.i("myTag", "网络情况正常" + netState);
@@ -221,7 +220,7 @@ public class WelPresenterImpl implements IWelContract.IWelPresenter {
             return;
         }
         //定义请求服务器URL
-        final String SERVER_URL = "http://bmob-cdn-6590.b0.upaiyun.com/2016/10/11/54b0a73340c55cc080545797369d1daa.html";
+        final String SERVER_URL = IContracts.CITYS_URL;
         //实例化OKHttpClient 对象
         OkHttpClient okHttpClient = new OkHttpClient();
         final okhttp3.Request request = new okhttp3.Request.Builder()

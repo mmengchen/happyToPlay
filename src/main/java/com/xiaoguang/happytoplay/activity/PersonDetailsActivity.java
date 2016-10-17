@@ -18,6 +18,8 @@ import com.xiaoguang.happytoplay.utils.ImageLoaderutils;
 import com.xiaoguang.happytoplay.utils.QrCodeUtils;
 import com.xiaoguang.happytoplay.view.CircleImageView;
 
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -99,7 +101,7 @@ public class PersonDetailsActivity extends BaseActivity implements IFragPersonCo
     }
 
     @Override
-    public void jumpActivity(int type) {
+    public void jumpActivity(List list, int type) {
 
     }
 
@@ -113,7 +115,7 @@ public class PersonDetailsActivity extends BaseActivity implements IFragPersonCo
         //显示数据到控件上
         mActPersonDetailsTvNickname.setText(MyApplitation.user.getNickName());
         mActPersonDetailsTvPhone.setText(MyApplitation.user.getUsername());
-        mActPersonDetailsTvAge.setText(String.valueOf(MyApplitation.user.getAge())+" 岁");
+        mActPersonDetailsTvAge.setText(String.valueOf(MyApplitation.user.getAge()) + " 岁");
         mActPersonDetailsTvLocation.setText(MyApplitation.user.getAddress());
         //设置二维码
         mActPersonDetailsIvCode.setImageBitmap(QrCodeUtils.createQrCode(MyApplitation.user));

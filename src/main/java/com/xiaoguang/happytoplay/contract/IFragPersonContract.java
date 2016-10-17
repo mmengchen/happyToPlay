@@ -6,6 +6,8 @@ import android.content.Intent;
 import com.xiaoguang.happytoplay.activity.IBaseView;
 import com.xiaoguang.happytoplay.presenter.IBasePresenter;
 
+import java.util.List;
+
 /**
  * 契约接口，表明 View和Presenter之间的方法
  * Created by 11655 on 2016/9/26.
@@ -30,13 +32,8 @@ public interface IFragPersonContract {
          */
         void hiddenLoading();
 
-        /**
-         * 页面跳转
-         * @param type  跳转的类型
-         */
 
-        void jumpActivity(int type);
-
+        void jumpActivity(List list,int type);
         /**
          * 返回
          *
@@ -93,5 +90,11 @@ public interface IFragPersonContract {
          * 从服务器加载头像
          */
         void loadHeader();
+
+        /**
+         * Item的查询方法
+         * @param type 查询的类型 0 优惠查询 1.收藏查询 2.发起活动查询 3.订单查询 4.参加活动查询
+         */
+        void query(int type);
     }
 }

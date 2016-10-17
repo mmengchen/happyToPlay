@@ -16,10 +16,12 @@ import android.widget.Toast;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.xiaoguang.happytoplay.R;
-import com.xiaoguang.happytoplay.activity.PayActivity;
 import com.xiaoguang.happytoplay.activity.PersonDetailsActivity;
+import com.xiaoguang.happytoplay.activity.PersonShowResult;
+import com.xiaoguang.happytoplay.activity.ShowResultActivity;
 import com.xiaoguang.happytoplay.application.MyApplitation;
 import com.xiaoguang.happytoplay.base.BaseFragment;
+import com.xiaoguang.happytoplay.bean.Grather;
 import com.xiaoguang.happytoplay.contract.IFragPersonContract;
 import com.xiaoguang.happytoplay.presenter.FragPersonPresenterImpl;
 import com.xiaoguang.happytoplay.utils.ImageChooseUtils;
@@ -27,6 +29,8 @@ import com.xiaoguang.happytoplay.utils.ImageLoaderutils;
 import com.xiaoguang.happytoplay.utils.LogUtils;
 import com.xiaoguang.happytoplay.view.BottomPopView;
 import com.xiaoguang.happytoplay.view.CircleImageView;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -134,25 +138,29 @@ public class PersonFragment extends BaseFragment implements IFragPersonContract.
 
     @Override
     public void jumpActivity() {
-
+        Intent intent = new Intent(getContext(), PersonDetailsActivity.class);
+        //跳转到个人详情
+        startActivity(intent);
     }
 
     @Override
-    public void jumpActivity(int type) {
-        //用于进行支付功能测试
-        switch (type) {
-            case 4:
-                //暂时进行支付测试
-                startActivity(new Intent(getContext(), PayActivity.class));
-                break;
-            case 5:
-                Intent intent = new Intent(getContext(), PersonDetailsActivity.class);
-                //跳转到个人详情
-                startActivity(intent);
-                break;
+    public void jumpActivity(List datas,int type) {
+        Intent intent = null;
+        if (type==0){
+            //将数据显示到内存中
+            MyApplitation.putDatas("queryDatas",(List< Grather>)datas);
+            //跳转到信息显示界面
+          intent = new Intent(getContext(), ShowResultActivity.class);
+        }else if (type==3){
+            //跳转到信息显示界面2
+            intent = new Intent(getContext(), PersonShowResult.class);
+            intent.putExtra("type",3);
+        }else if (type==4){
+            intent = new Intent(getContext(), PersonShowResult.class);
+            intent.putExtra("type",4);
         }
+        startActivity(intent);
     }
-
     @Override
     public boolean back() {
         return false;

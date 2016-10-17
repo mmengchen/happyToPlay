@@ -15,8 +15,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 import c.b.BP;
+import cn.bmob.push.BmobPush;
 import cn.bmob.sms.BmobSMS;
 import cn.bmob.v3.Bmob;
+import cn.bmob.v3.BmobInstallation;
 
 import static com.xiaoguang.happytoplay.contract.IContracts.BMOB_SDK_APP_KEY;
 
@@ -62,6 +64,10 @@ public class MyApplitation extends Application {
         Bmob.initialize(this,BMOB_SDK_APP_KEY);
         //初始化Bmob 支付SDK
         BP.init(context,BMOB_SDK_APP_KEY);
+        // 使用推送服务时的初始化操作
+        BmobInstallation.getCurrentInstallation().save();
+        // 启动推送服务
+        BmobPush.startWork(this);
         //初始化百度地图SDK
         SDKInitializer.initialize(getApplicationContext());
         mLocationClient = new LocationClient(getApplicationContext());     //声明LocationClient类

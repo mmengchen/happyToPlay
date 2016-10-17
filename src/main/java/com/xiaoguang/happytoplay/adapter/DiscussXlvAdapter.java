@@ -99,6 +99,12 @@ public class DiscussXlvAdapter extends BaseAdapter {
                     }
                     //设置用户名
                     finalViewHolder.tvUname.setText(user.getNickName());
+                    //设置性别
+                    if(user.getSex()=="男"){
+                        finalViewHolder.imgSex.setImageResource(R.drawable.boy);
+                    }else {
+                        finalViewHolder.imgSex.setImageResource(R.drawable.gril);
+                    }
                     //查询信息成功
                     presenter.queryUserSuccess();
                 } else {
