@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:id="@+id/frag_message_rl_header"
+        android:layout_width="fill_parent"
+        android:layout_height="48dp"
+        android:background="@color/colorGreenFont" >
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_centerVertical="true"
+            android:paddingLeft="8.0dp" >
+
+            <Button
+                android:id="@+id/frag_message_btn_friend"
+                android:layout_width="70dip"
+                android:layout_height="30dip"
+                android:background="@drawable/baike_btn_pink_left_f_96"
+                android:gravity="center"
+                android:text="好友"
+                android:textColor="@color/colorGreenFont"
+                android:textSize="14sp" />
+
+            <Button
+                android:id="@+id/frag_message_btn_grahter"
+                android:layout_width="70dip"
+                android:layout_height="30dip"
+                android:background="@drawable/baike_btn_trans_right_f_96"
+                android:gravity="center"
+                android:text="活动"
+                android:textColor="#ffffff"
+                android:textSize="14sp" />
+        </LinearLayout>
+    </RelativeLayout>
+    <android.support.v4.view.ViewPager
+        android:id="@+id/frag_message_view_pager"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" />
+
+</LinearLayout>

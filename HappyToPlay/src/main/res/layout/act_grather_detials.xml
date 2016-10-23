@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?><!--活动详情的布局-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <!--导航栏-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/colorGreenFont"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/frag_message_ib_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/colorTransparency"
+            android:src="@drawable/back" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="活动详情"
+            android:textColor="@color/colorWhite"
+            android:textSize="20sp" />
+
+        <ImageButton
+            android:id="@+id/frag_person_ib_menu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/colorTransparency"
+            android:gravity="center"
+            android:src="@drawable/menu" />
+    </LinearLayout>
+    <!--导航栏结束-->
+    <!--下部分-->
+    <!--<ScrollView-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent">-->
+    <!--活动的标题和小控件-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorPersonBg"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorWhite"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/act_grather_detials_tv_grather_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="25dp"
+                android:layout_marginTop="25dp"
+                android:background="@color/colorWhite"
+                android:text="活动标题" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/colorDust" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:layout_marginTop="10dp"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/act_grather_detials_tv_location"
+                    android:layout_width="50dp"
+                    android:layout_height="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="20dp"
+                    android:drawableLeft="@drawable/act_grather_detials_location"
+                    android:text="北京" />
+
+                <TextView
+                    android:id="@+id/act_grather_detials_tv_time"
+                    android:layout_width="50dp"
+                    android:layout_height="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="20dp"
+                    android:drawableLeft="@drawable/act_grather_detials_time"
+                    android:text="时间" />
+
+                <TextView
+                    android:id="@+id/act_grather_detials_tv_type"
+                    android:layout_width="50dp"
+                    android:layout_height="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="20dp"
+                    android:drawableLeft="@drawable/act_grather_detials_type"
+                    android:text="类型" />
+
+                <TextView
+                    android:id="@+id/act_grather_detials_tv_money"
+                    android:layout_width="50dp"
+                    android:layout_height="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="20dp"
+                    android:drawableLeft="@drawable/act_grather_detials_money"
+                    android:text="金额" />
+            </LinearLayout>
+        </LinearLayout>
+        <!--活动具体内容区域 start-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/colorWhite"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/act_grather_detials_tv_grather_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableTop="@drawable/act_grather_detials_content"
+                android:maxHeight="200dp"
+                android:paddingLeft="5dp"
+                android:paddingTop="10dp"
+                android:text="内容区域"
+                android:textSize="18dp" />
+
+            <GridView
+                android:id="@+id/act_grather_detials_gv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:numColumns="1"></GridView>
+
+            <Button
+                android:id="@+id/act_grather_detials_btn_join"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="132dp"
+                android:layout_marginRight="132dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/colorGreenFont"
+                android:text="参加活动"
+                android:textColor="@color/colorWhite"
+                android:textSize="18sp" />
+        </LinearLayout>
+        <!--活动具体内容区域 end-->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/colorDust" />
+        <!--评论区域 star-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorWhite"
+            android:layout_marginBottom="10dp"
+            android:layout_gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:drawableBottom="@drawable/line"
+                android:gravity="center"
+                android:text="全部评论"
+                android:textSize="20sp" />
+
+            <com.xiaoguang.happytoplay.view.XListView
+                android:id="@+id/act_grather_detials_xlv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="1dp"
+                />
+
+            <ImageView
+                android:id="@+id/act_grather_detials_iv_pl"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@drawable/act_grather_detials_pinglun"
+               />
+        </LinearLayout>
+        <!--评论区域结束-->
+    </LinearLayout>
+    <!--</ScrollView>-->
+    <!--内容区域结束-->
+</LinearLayout>
