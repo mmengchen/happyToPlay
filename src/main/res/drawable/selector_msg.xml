@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <!--默认状态为true-->
-    <item android:drawable="@drawable/message_press" android:state_enabled="false" />
-    <item android:drawable="@drawable/message" android:state_enabled="true" />
-</selector>

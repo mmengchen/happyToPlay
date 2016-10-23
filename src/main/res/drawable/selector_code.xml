@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:drawable="@drawable/code_press" android:state_enabled="false" />
-    <item android:drawable="@drawable/act_reg_code" android:state_enabled="true" />
-</selector>
