@@ -10,6 +10,19 @@
 - 活动的详情显示没有问题、发布评论没有问题
    
 ***  
+####屏幕截图
+
+<img src="/screenshots/index.png" alt="screenshot" title="screenshot" width="270" height="486" />
+<img src="/screenshots/login.png" alt="screenshot" title="screenshot" width="270" height="486" />
+<img src="/screenshots/ac_details.png" alt="screenshot" title="screenshot" width="270" height="486" />
+<img src="/screenshots/home.png" alt="screenshot" title="screenshot" width="270" height="486" />
+<img src="/screenshots/more.png" alt="screenshot" title="screenshot" width="270" height="486" />
+<img src="/screenshots/person.png" alt="screenshot" title="screenshot" width="270" height="486" />
+<img src="/screenshots/pub.png" alt="screenshot" title="screenshot" width="270" height="486" />
+<img src="/screenshots/reg.png" alt="screenshot" title="screenshot" width="270" height="486" />
+
+
+***
 ###已经实现的功能
 - 2016/10/17 完善个人中心（收藏、发起、订单、活动、设置模块的数据查询和显示),
             添加推送功能,实现从Bmob服务器发送推送信息到设备，并以通知栏形式显示

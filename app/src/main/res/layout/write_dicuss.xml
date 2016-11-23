@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:layout_gravity="center"
+        android:text="写评论"
+        android:drawableLeft="@drawable/act_grather_detials_pinglun"/>
+    <EditText
+        android:id="@+id/write_et_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:maxHeight="300dp"
+        android:padding="10dp"
+        android:hint="写点什么"
+        android:maxLength="100"/>
+    <Button
+        android:id="@+id/write_btn_send"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textColor="@color/colorWhite"
+        android:background="@color/colorGreenFont"
+        android:layout_margin="20dp"
+        android:text="评 论"/>
+</LinearLayout>

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?><!--发布信息后的提示效果-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <!--头部开始-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/act_pub_tip_tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="5dp"
+            android:text="发布活动成功"
+            android:textSize="20dp" />
+        <TextView
+            android:id="@+id/act_pub_tip_tv_finish"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="5dp"
+            android:text="完成" />
+        <ImageView
+            android:id="@+id/act_pub_tip_iv_share"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="5dp"
+            android:layout_toLeftOf="@id/act_pub_tip_tv_finish"
+            android:src="@drawable/act_pub_tip_share" />
+
+    </RelativeLayout>
+    <!--头部结束-->
+    <!--内容区域-->
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:background="#FFCB67" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/act_pub_tip_btn_share"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#FF9C41"
+            android:text="立即分享刮优惠券" />
+
+        <Button
+            android:id="@+id/act_pub_tip_btn_select"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:background="#fff"
+            android:text="查看参加人数" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="5dp"
+        android:background="@color/colorDust" />
+
+    <Button
+        android:id="@+id/act_pub_tip_btn_to_scratch_cards"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="50dp"
+        android:background="#FFCB67"
+        android:text="戳我去刮奖" />
+</LinearLayout>

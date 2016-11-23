@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?><!--查询活动的显示界面-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/frag_message_rl_header"
+        android:layout_width="fill_parent"
+        android:layout_height="48dp"
+        android:background="@color/colorGreenFont"
+       >
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorWhite"
+            android:layout_centerInParent="true"
+            android:text="查询结果"/>
+        <TextView
+            android:id="@+id/act_show_result_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="10dp"
+            android:gravity="center"
+            android:layout_centerVertical="true"
+            android:text="返回"/>
+    </RelativeLayout>
+    <!--导航栏结束-->
+    <!--内容区域-->
+    <com.xiaoguang.happytoplay.view.XListView
+        android:id="@+id/act_show_result_xlv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+</LinearLayout>
